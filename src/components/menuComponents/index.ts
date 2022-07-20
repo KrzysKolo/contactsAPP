@@ -1,0 +1,1 @@
+export { default as DivMenu } from './DivMenu/DivMenu';
