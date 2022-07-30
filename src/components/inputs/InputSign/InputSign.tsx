@@ -1,17 +1,25 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { Flex, Input } from '@chakra-ui/react';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 
 export type InputSignProps = {
   placeholder: string,
+  name: string,
   value: string,
   type: string,
-  setValue: Dispatch<SetStateAction<string>>,
-}
+  onChange: React.MouseEventHandler<HTMLElement> | any,
+  error: string | any;
+  message: string | any;
+  touched: string | any;
+};
 
-const InputSign: React.FC<InputSignProps> = ({ placeholder, value, type, setValue }) => {
+const InputSign: React.FC<InputSignProps> = ({ placeholder, value, type, onChange, error, message, name, touched }) => {
   return (
-    <Flex>
+    <Flex
+      flexDirection='column'
+    >
       <Input
+        name={name}
         placeholder={placeholder}
         type={type}
         value={value}
@@ -31,8 +39,9 @@ const InputSign: React.FC<InputSignProps> = ({ placeholder, value, type, setValu
         paddingBottom='24px'
         cursor='pointer'
         _hover={{ borderBottomColor: 'green.500', color: "green.500" }}
-        onChange={(e) => setValue(e.target.value)}
-        />
+        onChange={onChange}
+      />
+      {error && touched && <ErrorMessage message={message} />}
     </Flex>
   )
 }

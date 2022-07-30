@@ -1,6 +1,5 @@
 import { Box, HStack, Stack, Text, VStack, Image, Flex } from '@chakra-ui/react';
 import React from 'react';
-import { Contacts } from '../../../features/getContacts/getContactsSlice';
 import { IoChevronUpSharp } from "react-icons/io5";
 import photoUsers from '../../../assets/image/users.png';
 import TextContact from '../TextContact/TextContact';
@@ -10,9 +9,10 @@ import { BsTrash } from "react-icons/bs";
 import { FaRegEdit } from 'react-icons/fa';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
 import { TbWorld } from 'react-icons/tb'
+import { ContactToFirebase } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
 
 export type ContactBoxProps = {
-  contact: Contacts,
+  contact: ContactToFirebase,
   onClick: () => void,
 }
 
@@ -101,7 +101,7 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
               alignItems='center'
               justifyContent='center'
             >
-              <Image  borderRadius='full' boxSize='96%' objectFit='cover'src={(contact.image.name !== "") ? contact.image.url : photoUsers } alt={contact.name} />
+              <Image  borderRadius='full' boxSize='96%' objectFit='cover'src={(contact.image?.name !== "") ? contact.image?.url : photoUsers } alt={contact.name} />
             </Flex>
           </Flex>
         </HStack>
@@ -116,20 +116,20 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             margin='10px auto'
 
           >
-          <TextContact contact={contact.street} />
+          <TextContact contact={contact.addresses.street} />
             <Box
               display="flex"
             >
-              <TextContact contact={contact.code} />
-              <TextContact contact={contact.city} />
+              <TextContact contact={contact.addresses.code} />
+              <TextContact contact={contact.addresses.city} />
             </Box>
         </Box>
           <Box
             width='98%'
             margin='0 auto'
           >
-              {contact.email && <TextIconContact icon={faEnvelope} contact={contact.email} />}
-              {contact.phone && <TextIconContact icon={faPhone} contact={contact.phone} />}
+              {contact.addresses.email && <TextIconContact icon={faEnvelope} contact={contact.addresses.email} />}
+              {contact.addresses.phone && <TextIconContact icon={faPhone} contact={contact.addresses.phone} />}
             </Box>
         </Stack>
       </Flex>
@@ -187,54 +187,66 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
         <HStack
           padding='5px 15px'
         >
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <RiFacebookBoxFill />
-          </Box>
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <RiLinkedinBoxFill />
-          </Box>
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <RiGithubFill />
-          </Box>
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <RiYoutubeFill />
-          </Box>
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <RiInstagramLine />
-          </Box>
-        <Box
-            color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-            fontSize='20px'
-            cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
-          >
-            <TbWorld />
-          </Box>
+          {contact.socialMedia.facebook &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <RiFacebookBoxFill />
+            </Box>
+          }
+          {contact.socialMedia.linkedin &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <RiLinkedinBoxFill />
+            </Box>
+          }
+          {contact.socialMedia.github &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <RiGithubFill />
+            </Box>
+          }
+          {contact.socialMedia.youtube &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <RiYoutubeFill />
+            </Box>
+          }
+          {contact.socialMedia.youtube &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <RiInstagramLine />
+            </Box>
+          }
+          {contact.socialMedia.web &&
+            <Box
+              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+              fontSize='20px'
+              cursor='pointer'
+              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            >
+              <TbWorld />
+            </Box>
+          }
 
 
         </HStack>

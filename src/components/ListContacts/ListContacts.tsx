@@ -1,17 +1,21 @@
 import { Box,  } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { Contacts } from '../../features/getContacts/getContactsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { ContactToFirebase, isSuccess } from '../../features/addContactToFirebase/addContactToFirebaseSlice';
+import { getContactsFromFirebase } from '../../features/getContacts/getContactsSlice';
 import { searchValue } from '../../features/getSearchValue/getSearchValueSlice';
 import { ContactCard } from '../contactBoxComponents/';
 
-const ListContacts:React.FC = () => {
+const ListContacts: React.FC = () => {
+  const dispatch = useDispatch();
   const { contactsTab } = useSelector((store: any) => store.getContacts);
   console.log(contactsTab);
   const [contactsToList, setContactsToList] = useState([]);
-  const _searchValue = useSelector(searchValue)
-  console.log(_searchValue)
-  console.log(_searchValue.getSearchValue.searchValue)
+  const _searchValue = useSelector(searchValue);
+  const _isSuccess = useSelector(isSuccess);
+  console.log(_isSuccess)
+  const Adsd = getContactsFromFirebase();
+  console.log(Adsd);
 
   useEffect(() => {
     if (_searchValue.getSearchValue.searchValue.trim() === '') {
@@ -40,7 +44,7 @@ const ListContacts:React.FC = () => {
     <Box
       paddingTop='2rem'
     >
-      {contactsToList.map((item: { id: any; contactID?: string; name?: string; email?: string; phone?: string; street?: string; code?: string; city?: string; description?: string; image?: { name?: string | undefined; url?: string | undefined; }; typeContact?: string; }) => <ContactCard key={item.id} contact={item}/>) }
+      {contactsToList.map((item: ContactToFirebase) => <ContactCard key={item.idContact} contact={item}/>) }
     </Box>
   )
 }

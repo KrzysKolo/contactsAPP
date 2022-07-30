@@ -5,16 +5,34 @@ import { InputSign } from '../../inputs'
 import logo from '../../../assets/image/Contact-AppLogo2.png';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 const FormRegister = () => {
 
-  const [valueName, setValueName] = useState<string>('');
-  const [valuePassword, setValuePassword] = useState<string>('');
-  const [valuePasswordRepeat, setValuePasswordRepeat] = useState<string>('');
-  const [isError, setIsError] = useState<boolean>(false);
+
+
   let navigate = useNavigate();
 
-  const registerUserInFirebase = () => {
+  const formik = useFormik({
+    initialValues: {
+      userName: '',
+      password: '',
+      passwordaa: '',
+    },
+    validationSchema: yup.object({
+      userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(30, 'nazwa użytkownika nie może być dłuższa jak 30 znaków').email('Email zawiera błędy'),
+      password: yup.string().required('Hasło jest wymagane'),
+      passwordaa: yup.string().required('Hasła muszą być identyczne'),
+    }),
+    onSubmit: (values, actions) => {
+      alert(JSON.stringify(values, null, 2));
+      navigate('/signIn');
+      actions.resetForm();
+    }
+  });
+
+/*   const registerUserInFirebase = () => {
     if (valueName.length === 0 || valuePassword.length === 0 || valuePasswordRepeat.length === 0 || valuePassword !== valuePasswordRepeat) {
       setIsError(!isError);
     } else {
@@ -23,7 +41,7 @@ const FormRegister = () => {
       setValuePassword('');
       navigate('/signIn');
     }
-  };
+  }; */
 
   return (
     <Flex
@@ -36,12 +54,39 @@ const FormRegister = () => {
     >
       <Image src={logo} width='100%' />
       <form action="submit">
-        <InputSign placeholder='email' value={valueName} setValue={setValueName} type='text' />
-        <InputSign placeholder='password' value={valuePassword} setValue={setValuePassword} type='password' />
-        <InputSign placeholder='repeat the password' value={valuePasswordRepeat} setValue={setValuePasswordRepeat} type='password' />
-        <LoginButton onClick={registerUserInFirebase}  name="Zarejestruj się!" />
+          <InputSign
+            name='userName'
+            placeholder='email'
+            value={formik.values.userName}
+            onChange={formik.handleChange}
+            message={formik.errors.userName}
+            error={formik.errors.userName}
+            type='text'
+            touched={formik.touched.userName}
+          />
+          <InputSign
+            placeholder='password'
+            onChange={formik.handleChange}
+            type='password'
+            message={formik.errors.password}
+            error={formik.errors.password}
+            value={formik.values.password}
+            name='password'
+            touched={formik.touched.password}
+          />
+          <InputSign
+            placeholder='repeat the password'
+            onChange={formik.handleChange}
+            type='password'
+            message={formik.errors.passwordaa}
+            error={formik.errors.passwordaa}
+            value={formik.values.passwordaa}
+            name='passwordaa'
+            touched={formik.touched.passwordaa}
+             />
+        <LoginButton onClick={formik.handleSubmit}  name="Zarejestruj się!" />
       </form>
-        {isError && <ErrorMessage message='Masz błędy w formularzu rejestracyjnym' />}
+
     </Box>
   </Flex>
   )

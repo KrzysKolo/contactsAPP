@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Contacts } from '../../../features/getContacts/getContactsSlice';
+import { ContactToFirebase } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
+
 import ContactBox from '../ContactBox/ContactBox';
 import ContactNameBox from '../ContactNameBox/ContactNameBox';
 
 export type ContactCardProps = {
-  contact: Contacts | any,
+  contact: ContactToFirebase | any,
 };
 
 const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {

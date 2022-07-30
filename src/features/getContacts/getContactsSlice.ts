@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getContacts } from '../../services/contacts/contacts';
+import { ContactToFirebase } from "../addContactToFirebase/addContactToFirebaseSlice";
 
-export type Contacts = {
+/* export type Contacts = {
   id?: string | any;
   contactID: string;
   name: string;
@@ -16,10 +17,10 @@ export type Contacts = {
     url?: string,
   },
   typeContact: string;
-};
+}; */
 
 export type ContactsTabType = {
-  contactsTab: Contacts[],
+  contactsTab: ContactToFirebase[],
   isLoading: boolean,
   isError: boolean,
 };
@@ -38,12 +39,10 @@ export const getContactsFromFirebase = createAsyncThunk(
       for (const key in contactsAll.data) {
         contactsTab.push({ ...contactsAll.data[key], id: key })
       }
-      return contactsTab
+      return contactsTab;
     } catch (error) {
       return thunkApi.rejectWithValue('something went wrong');
     }
-
-
   }
 );
 
