@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Image, Flex, Text } from '@chakra-ui/react';
 import logo from '../../../assets/image/Contact-AppLogo2.png';
 import { LoginButton, LoginLinkButton } from '../../buttons';
@@ -10,6 +10,8 @@ import { changeStateLogin } from '../../../features/stateOfLogin/stateOfLoginSli
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { auth } from '../../../firebase/config';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const FormSignIn = () => {
   const [valueName] = useState<string>('');
@@ -27,15 +29,21 @@ const FormSignIn = () => {
     },
     validationSchema,
     onSubmit: (values, actions) => {
-      alert(JSON.stringify(values, null, 2));
-      dispatch(changeStateLogin(true));
-      navigate('/home');
+      signInWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => navigate('/home')).catch((err) => alert(err.message));
       actions.resetForm();
     }
   });
 
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigate('/home')
+        dispatch(changeStateLogin(true));
+      }
+    })
+  })
 
   return (
     <Flex

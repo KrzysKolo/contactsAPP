@@ -2,13 +2,15 @@ import React from 'react';
 //CHAKRA COMPONENTS
 import { Box, Flex, HStack, Image, Button } from '@chakra-ui/react';
 //REACT-ROUTER-DOM
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 //FILES
 import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import user from './../../../assets/image/user.jpg';
 import { useDispatch } from 'react-redux';
 import { changeStateLogin } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase/config';
 
 export type DivMenuProps = {
   menuItems: dataMenuType[],
@@ -16,8 +18,11 @@ export type DivMenuProps = {
 
 const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChangeStateLogin = () => {
+   signOut(auth).then(()=>navigate('/')).catch(err => { alert(err.message) });
+
     dispatch(changeStateLogin(false));
   };
 
