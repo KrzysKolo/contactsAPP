@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Image, Flex, Text } from '@chakra-ui/react';
 import logo from '../../../assets/image/Contact-AppLogo2.png';
-import { LoginButton, LoginLinkButton } from '../../buttons';
+import { LoginButton } from '../../buttons';
 import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch } from 'react-redux';
@@ -43,7 +43,14 @@ const FormSignIn = () => {
         dispatch(changeStateLogin(true));
       }
     })
-  })
+  });
+
+  const signInWithGoogle = () => {
+    console.log('loguje sie za pomoca Google')
+  }
+  const signInWithFacebook = () => {
+    console.log('loguje sie za pomoca Facebook')
+  }
 
   return (
     <Flex
@@ -93,8 +100,8 @@ const FormSignIn = () => {
           >lub</Text>
           <Line />
         </Flex>
-        <LoginLinkButton link='/signIn' name="Zaloguj przez Google" />
-        <LoginLinkButton link='/signIn' name="Zaloguj przez Facebook" />
+        <LoginButton onClick={signInWithGoogle} name="Zaloguj przez Google" />
+        <LoginButton onClick={signInWithFacebook} name="Zaloguj przez Facebook" />
       </Box>
     </Flex>
   )

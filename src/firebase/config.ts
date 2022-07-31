@@ -3,13 +3,13 @@ import 'firebase/compat/storage';
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = ({
-  apiKey: "AIzaSyCaAv9GJZLi6NjIOuTWGJw9agcL0RMLntE",
-  authDomain: "contact-app-86f60.firebaseapp.com",
-  databaseURL: "https://contact-app-86f60-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "contact-app-86f60",
-  storageBucket: "contact-app-86f60.appspot.com",
-  messagingSenderId: "837212607376",
-  appId: "1:837212607376:web:51d8064d362d58cdabd915"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKED,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 });
 firebase.initializeApp(firebaseConfig);
 const storageImage = firebase.storage();
