@@ -3,18 +3,22 @@ import { Box, Flex, Image } from '@chakra-ui/react'
 import { LoginButton } from '../../buttons'
 import { InputSign } from '../../inputs'
 import logo from '../../../assets/image/Contact-AppLogo2.png';
-import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase/config';
+import { useDispatch } from 'react-redux';
+import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import axios from 'axios';
+
 
 const FormRegister = () => {
   const [email] = useState<string>('');
   const [password] = useState<string>('');
   const [passwordConfirm] = useState<string>('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -27,19 +31,35 @@ const FormRegister = () => {
       password: yup.string().required('Hasło jest wymagane'),
       passwordConfirm: yup.string().required('Hasła muszą być identyczne'),
     }),
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
       if (password !== passwordConfirm) {
         alert("Hasa musza być takie same");
         return;
       } else {
-        createUserWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => {
-          navigate("/");
-        })
-          .catch((err) => alert(err.message));
+        try {
+          const res = await axios.post('accounts:signUp', {
+            email: formik.values.userName,
+            password: formik.values.password,
+            returnSecureToken: true,
+          })
+          console.log(res)
+          dispatch(isAuthenticated(false));
+          navigate('/signin');
+          actions.resetForm();
+        }
+        catch (ex) {
+          console.log(ex)
+        }
+        /*   createUserWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => {
+             navigate("/home");
+             dispatch(changeStateLogin(true));
+             actions.resetForm();
+           })
+             .catch((err) => alert(err.message)); */
       }
-      actions.resetForm();
-    }
-  });
+
+      }
+    });
 
   return (
     <Flex

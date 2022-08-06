@@ -8,9 +8,12 @@ import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import user from './../../../assets/image/user.jpg';
 import { useDispatch } from 'react-redux';
-import { changeStateLogin } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase/config';
+import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
+import { string } from 'yup';
+
 
 export type DivMenuProps = {
   menuItems: dataMenuType[],
@@ -19,11 +22,17 @@ export type DivMenuProps = {
 const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [storage, setStorage] = useStateStorage("klucz", "")
+
 
   const handleChangeStateLogin = () => {
-   signOut(auth).then(()=>navigate('/')).catch(err => { alert(err.message) });
+    navigate('/');
+    dispatch(isAuthenticated(false));
+    window.localStorage.removeItem('userContactsApp');
+  };
 
-    dispatch(changeStateLogin(false));
+  const handleOpenProfile = () => {
+    navigate('/profile');
   };
 
   const menuItem = menuItems.map(item =>
@@ -37,6 +46,9 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
     </Box>)
 
   return (
+   <>
+      {storage}
+
     <HStack
       width='1200px'
       justifyContent='space-between'
@@ -66,6 +78,7 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
             borderColor='blue.500'
             marginRight='2rem'
             boxShadow='base'
+            onClick={handleOpenProfile}
           >
             <Image
               src={user}
@@ -88,7 +101,8 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
           </Link>
         </Flex>
       </Box>
-    </HStack>
+      </HStack>
+      </>
   )
 }
 

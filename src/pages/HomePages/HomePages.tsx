@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LeftPanel, RightPanel } from '../../components';
 import { HStack } from '@chakra-ui/react';
+import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
+import { isAuthenticated } from '../../features/stateOfLogin/stateOfLoginSlice';
+import { useNavigate } from 'react-router-dom';
 
 const HomePages = () => {
+  const navigate = useNavigate();
+
+
+  useWebsiteTitle('Kontakty')
   return (
     <main>
       <HStack
@@ -20,3 +27,7 @@ const HomePages = () => {
 }
 
 export default HomePages;
+
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}

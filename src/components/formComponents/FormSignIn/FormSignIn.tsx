@@ -6,16 +6,20 @@ import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { changeStateLogin } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, userNameOfLogged } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { auth } from '../../../firebase/config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import axios from '../../../api/contactAuth';
+import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
+
 
 const FormSignIn = () => {
   const [valueName] = useState<string>('');
   const [valuePassword] = useState<string>('');
+  const [userNameInStorage, setUserNameInStorage] = useStateStorage("", "")
 
   const validationSchema = () => yup.object().shape({
     userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(30, 'nazwa użytkownika nie może być dłuższa jak 30 znaków').email('Email zawiera błędy'),
@@ -28,22 +32,38 @@ const FormSignIn = () => {
       password: valuePassword,
     },
     validationSchema,
-    onSubmit: (values, actions) => {
-      signInWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => navigate('/home')).catch((err) => alert(err.message));
-      actions.resetForm();
+    onSubmit: async (values, actions) => {
+      try {
+       /*  signInWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => navigate('/home')).catch((err) => alert(err.message));
+        actions.resetForm(); */
+        const res = await axios.post('accounts:signInWithPassword', {
+          email: formik.values.userName,
+          password: formik.values.password,
+          returnSecureToken: true,
+        });
+        console.log(res);
+        dispatch(isAuthenticated(true));
+        window.localStorage.setItem('userContactsApp', `${formik.values.userName}`);
+        actions.resetForm();
+        navigate('/home');
+      }
+      catch (ex) {
+        console.log(ex)
+      }
+
     }
   });
 
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
-  useEffect(() => {
+/*   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         navigate('/home')
-        dispatch(changeStateLogin(true));
+        dispatch(isAuthenticated(true));
       }
     })
-  });
+  }); */
 
   const signInWithGoogle = () => {
     console.log('loguje sie za pomoca Google')
