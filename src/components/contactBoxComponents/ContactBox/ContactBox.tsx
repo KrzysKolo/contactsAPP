@@ -9,28 +9,50 @@ import { BsTrash } from "react-icons/bs";
 import { FaRegEdit } from 'react-icons/fa';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
 import { TbWorld } from 'react-icons/tb'
-import { ContactToFirebase } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
+import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
+import { removeContacts } from '../../../services/removeContacts/removeContacts';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../../app/store';
+import { removeContact, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+import { useParams } from 'react-router-dom';
 
 export type ContactBoxProps = {
-  contact: ContactToFirebase,
+  contact: ContactInFirebase,
   onClick: () => void,
 }
 
 const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
-  console.log(contact)
+  console.log(contact.id)
+  const dispatch = useDispatch<AppDispatch>();
+  const handleEditContact = () => {
+    console.log("edytuje kontakt")
+  };
+
+  const handleRemoveContact = async () => {
+    const id: string | any = contact.id;
+      try {
+        await removeContacts(id);
+        dispatch(setSuccess(true));
+        //dispatch(addToast({ title: "Usunięto dane z bazy", status: "success" }));
+       } catch (error) {
+        console.log(error);
+      }
+    };
+
+
   return (
     <Stack
       background={contact.typeContact === "1" ? "blue.500" : "green.500"}
       borderRadius='12px'
       marginBottom='10px'
       boxShadow='md'
+      width='475px'
       borderLeftWidth='2px'
         borderLeftColor={contact.typeContact === "1" ? "blue.500" : "green.500"}
         borderRightWidth='2px'
         borderRightColor={contact.typeContact === "1" ? "blue.500" : "green.500"}
         borderBottomWidth='3px'
         borderBottomColor={contact.typeContact === "1" ? "blue.500" : "green.500"}
-
     >
       <HStack
         onClick={onClick}
@@ -44,9 +66,9 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
           letterSpacing='2px'
           fontFamily="Orbitron"
           w="100%"
-          fontSize="14px"
+
           lineHeight='14px'
-          fontWeight="medium"
+          fontWeight="medium"fontSize="14px"
           marginRight='1.5rem'
         >
           {contact.name}
@@ -173,7 +195,8 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             color={contact.typeContact === "1" ? "blue.500" : "green.500"}
             fontSize='20px'
             cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
+            _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            onClick={handleRemoveContact}
           >
             <BsTrash />
           </Box>
@@ -181,7 +204,8 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             color={contact.typeContact === "1" ? "blue.500" : "green.500"}
             fontSize='20px'
             cursor='pointer'
-            _hover={{ transform: 'scale(1.2)', color: 'orange.300'}}
+            _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+            onClick={handleEditContact}
           >
             <FaRegEdit />
           </Box>

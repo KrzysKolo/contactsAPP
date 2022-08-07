@@ -1,7 +1,7 @@
 import React from 'react';
 import { DivMenu } from '../menuComponents';
 import dataMenu from '../../assets/data/dataMenu';
-import { Flex, Box, Image, Button } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 
 
 const Header = () => {

@@ -11,7 +11,7 @@ const TextIconContact: React.FC<TextIconContactProps> = ({ icon, contact }) => {
 
   return (
     <Text
-      fontSize="12px"
+      fontSize="14px"
       marginLeft='0.75rem'
       color="white"
       letterSpacing='2px'

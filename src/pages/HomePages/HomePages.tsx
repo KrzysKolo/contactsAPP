@@ -1,15 +1,44 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { LeftPanel, RightPanel } from '../../components';
 import { HStack } from '@chakra-ui/react';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
-import { isAuthenticated, stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../app/store';
+import { getAllContacts, getContact, isLoading, isSuccess, setLoading, setSuccess } from '../../features/firebaseContacts/firebaseContactsSlice';
 import { getContacts } from '../../services/contacts/contacts';
-import axios from 'axios';
-import axiosClient from '../../api/contactApi';
+import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
+import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 
 const HomePages = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const _allContacts = useSelector(getAllContacts);
+  const _user = useSelector(stateUser);
+  const _isSuccess = useSelector(isSuccess);
+  const _isLoading = useSelector(isLoading);
+  console.log(_isSuccess)
+
+  const fetchContacts = async () => {
+    try {
+      const res = await getContacts();
+      let contactsTab:  ContactInFirebase[] = [];
+      for (const key in res.data) {
+        contactsTab.push({ ...res.data[key], id: key })
+      }
+
+      console.log(contactsTab)
+      dispatch(getContact(contactsTab));
+      dispatch(setLoading(false));
+      dispatch(setSuccess(false));
+
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, [_isSuccess]);
+
 
   useWebsiteTitle('Kontakty')
   return (
@@ -20,10 +49,14 @@ const HomePages = () => {
         justifyContent='space-evenly'
         padding='2rem'
       >
-        <LeftPanel />
-        <RightPanel />
+        {_isLoading
+          ? (<p>Loading</p>)
+          : (<>
+              <LeftPanel />
+              <RightPanel />
+          </>)
+         }
       </HStack>
-
     </main>
   )
 }

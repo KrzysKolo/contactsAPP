@@ -9,10 +9,8 @@ import logo from './../../../assets/image/Contact-AppLogo2.png';
 import user from './../../../assets/image/user.jpg';
 import { useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
-import { string } from 'yup';
+;
 
 
 export type DivMenuProps = {

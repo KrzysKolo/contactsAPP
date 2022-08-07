@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ContactToFirebase } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
+import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 
 import ContactBox from '../ContactBox/ContactBox';
 import ContactNameBox from '../ContactNameBox/ContactNameBox';
 
 export type ContactCardProps = {
-  contact: ContactToFirebase | any,
+  contact: ContactInFirebase | any,
 };
 
 const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
@@ -13,7 +13,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
 
   const handleChangeStateVisibleCard = (e: string) => {
     setIsVisibleCard(!isVisibleCard);
-    console.log('sdsds')
+
   };
   console.log(isVisibleCard);
   return (

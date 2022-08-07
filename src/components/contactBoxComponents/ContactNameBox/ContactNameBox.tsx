@@ -1,12 +1,10 @@
 import { Box, HStack, Text, } from '@chakra-ui/react';
 import React from 'react';
 import { IoChevronDown } from "react-icons/io5";
-import { ContactToFirebase } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
-
-
+import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 
 export type ContactNameBoxProps = {
-  contact: ContactToFirebase,
+  contact: ContactInFirebase,
   onClick: () => void,
 };
 

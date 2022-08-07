@@ -1,47 +1,55 @@
 import { Box,  } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { ContactToFirebase, isSuccess } from '../../features/addContactToFirebase/addContactToFirebaseSlice';
-import { getContactsFromFirebase } from '../../features/getContacts/getContactsSlice';
+import { AppDispatch } from '../../app/store';
+import { getAllContacts, isLoading } from '../../features/firebaseContacts/firebaseContactsSlice';
 import { searchValue } from '../../features/getSearchValue/getSearchValueSlice';
 import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
+import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 import { ContactCard } from '../contactBoxComponents/';
 
+
 const ListContacts: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const _user = useSelector(stateUser);
-  const { contactsTab } = useSelector((store: any) => store.getContacts);
-  const [contactsTabUser] = useState(contactsTab.filter((item: { userID: string | any; }) => item.userID === _user.userID));
-  const [contactsToList, setContactsToList] = useState([]);
+  const _contactsTab = useSelector(getAllContacts);
+  const _isLoading = useSelector(isLoading);
+
+  const [contactsTabUser, setContactsTabUser] = useState<ContactInFirebase[] | any>([])
+  const [contactsToList, setContactsToList] = useState<ContactInFirebase[] | any>([]);
   const _searchValue = useSelector(searchValue);
-  const _isSuccess = useSelector(isSuccess);
+
+  useEffect(() => {
+      setContactsTabUser(_contactsTab.filter((item: { userID: string | any; }) => item.userID === _user.userID));
+  }, [_contactsTab,]);
+
+  console.log(_contactsTab)
+  console.log(_user.userID)
+  console.log(contactsTabUser)
 
   useEffect(() => {
     if (_searchValue.getSearchValue.searchValue.trim() === '') {
       setContactsToList(contactsTabUser);
-      return;
     }
     else {
       if (_searchValue.getSearchValue.searchValue.trim() !== "") {
         setContactsToList(
           contactsTabUser.filter((contact: { name: string | any; }) => {
-				const filteredContact = `${contact.name}`;
-				return filteredContact
-			.toLowerCase()
-		  .includes(_searchValue.getSearchValue.searchValue)
-			}
-			  )
-			);
+				    const filteredContact = `${contact.name}`;
+				      return filteredContact
+			                .toLowerCase()
+		                  .includes(_searchValue.getSearchValue.searchValue)
+			                })
+			  );
 		  }
     }
-
-  }, [_searchValue, contactsTab]);
+  }, [_searchValue, contactsTabUser]);
 
   return (
     <Box
       paddingTop='2rem'
     >
-      {contactsToList.map((item: ContactToFirebase) => <ContactCard key={item.idContact} contact={item}/>) }
+      {contactsToList.map((item: ContactInFirebase) => <ContactCard key={item.id} contact={item}/>) }
     </Box>
   )
 }

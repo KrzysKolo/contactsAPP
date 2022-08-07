@@ -3,13 +3,14 @@ import { ChakraProvider, ColorModeProvider, CSSReset, Flex } from '@chakra-ui/re
 import { HomePages, LoginFormPages, SignInForm, RegisterForm, ProfilePages, NotFound } from './pages';
 
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from './app/store';
-import { getContactsFromFirebase } from './features/getContacts/getContactsSlice';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from './components/Header/Header';
 import { isAuthenticated, stateLogin } from './features/stateOfLogin/stateOfLoginSlice';
 import useWebsiteTitle from './hooks/useWebsiteTitle/useWebsiteTitle';
+import { useDispatch, useSelector} from 'react-redux';
+import { setLoading } from './features/firebaseContacts/firebaseContactsSlice';
+
 
 
 function App() {
@@ -27,9 +28,13 @@ function App() {
     }
   };
 
+  //const _isUserLogged = useSelector(stateLogin)
+
+
+
   useEffect(() => {
     checkUser();
-    dispatch(getContactsFromFirebase());
+    dispatch(setLoading(true));
   }, []);
 
   console.log(userName)

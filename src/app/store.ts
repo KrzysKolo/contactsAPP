@@ -1,21 +1,24 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import getContactsReducer from '../features/getContacts/getContactsSlice';
+//import getContactsReducer from '../features/getContacts/getContactsSlice';
 import stateOfLoginReducer from '../features/stateOfLogin/stateOfLoginSlice';
 import stateOfContactCardReducer from '../features/stateOfContactCard/stateOfContactCardSlice';
 import getSearchValueSliceReducer from '../features/getSearchValue/getSearchValueSlice';
 import addAddressesToStateReducer from '../features/addAddressesToState/addAddressesToStateSlice';
 import addSocialmediaToStateReducer from '../features/addSocialMediaToState/addSocialmediaToStateSlice';
-import addContactToFirebaseReducer from '../features/addContactToFirebase/addContactToFirebaseSlice';
+import firebaseContactsReducer from '../features/firebaseContacts/firebaseContactsSlice';
+
 
 export const store = configureStore({
   reducer: {
-    getContacts: getContactsReducer,
+    firebaseContacts: firebaseContactsReducer,
+
+    //getContacts: getContactsReducer,
     stateOfLogin: stateOfLoginReducer,
     stateOfContactCard: stateOfContactCardReducer,
     getSearchValue: getSearchValueSliceReducer,
     addAddressesToState: addAddressesToStateReducer,
     addSocialmediaToState: addSocialmediaToStateReducer,
-    addContactToFirebase: addContactToFirebaseReducer,
+
   },
 });
 

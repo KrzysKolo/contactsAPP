@@ -11,11 +11,13 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { addAddressesContact, ContactAddresses, stateContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
 import { addSocialMediaUrlContact, SocialMediaUrl, stateContactSocialMedia } from '../../../features/addSocialMediaToState/addSocialmediaToStateSlice';
-import { addContactToFirebase, addContactToState, ContactToFirebase, setSuccess } from '../../../features/addContactToFirebase/addContactToFirebaseSlice';
+
 import { storageImage } from '../../../firebase/config';
 import contactApi from '../../../api/contactApi';
 import { v4 as uuidv4 } from 'uuid';
 import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { addContactToFirebase, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 
 
 export type FormAddContactProps = {
@@ -169,14 +171,14 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   //ADD TO FIREBASE
   const _addresses = useSelector(stateContactAddresses);
   const _socialMedia = useSelector(stateContactSocialMedia);
-  let addressesInitialValue: ContactAddresses[] | any = {
+  let addressesNoData: ContactAddresses[] | any = {
     city: "",
     street: "",
     code: "",
     email: "",
     phone: "",
   };
-  let socialMediaInitialValue: SocialMediaUrl[] | any = {
+  let socialMediaNoData: SocialMediaUrl[] | any = {
     facebook: "",
     linkedin: "",
     instagram: "",
@@ -187,7 +189,7 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
 
   const addContactOnServer = async (contactData: { name: string; description: string; typeContact: string; addresses: ContactAddresses[]; socialMedia: SocialMediaUrl[]; image: { name: any; url: any; }; }) => {
     try {
-      const res: ContactToFirebase = await contactApi.post(`/contacts.json`, contactData);
+      const res: ContactInFirebase = await contactApi.post(`/contacts.json`, contactData);
       dispatch(addContactToFirebase(res));
 
     }
@@ -205,15 +207,14 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
       name: formik.values.name,
       description: formik.values.description,
       typeContact: typeContact,
-      addresses: _addresses.length !== 0 ? _addresses : addressesInitialValue,
-      socialMedia: _socialMedia.length !== 0 ? _socialMedia : socialMediaInitialValue,
+      addresses: _addresses.length !== 0 ? _addresses : addressesNoData,
+      socialMedia: _socialMedia.length !== 0 ? _socialMedia : socialMediaNoData,
       image: image,
 
     };
-      dispatch(addContactToState(contactData));
-      addContactOnServer(contactData);
+    addContactOnServer(contactData);
     dispatch(setSuccess(true));
-
+    dispatch(setLoading(true));
     onClose();
   };
   const closeFormAddContact = () => {

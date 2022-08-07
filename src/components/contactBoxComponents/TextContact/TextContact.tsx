@@ -14,6 +14,7 @@ const TextContact: React.FC<TextContactProps> = ({contact}) => {
       letterSpacing='2px'
       fontFamily="Orbitron"
       fontWeight="medium"
+
     > {contact} </Text>
   )
 }
