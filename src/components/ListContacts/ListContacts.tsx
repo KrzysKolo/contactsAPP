@@ -4,34 +4,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactToFirebase, isSuccess } from '../../features/addContactToFirebase/addContactToFirebaseSlice';
 import { getContactsFromFirebase } from '../../features/getContacts/getContactsSlice';
 import { searchValue } from '../../features/getSearchValue/getSearchValueSlice';
+import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { ContactCard } from '../contactBoxComponents/';
 
 const ListContacts: React.FC = () => {
   const dispatch = useDispatch();
+  const _user = useSelector(stateUser);
   const { contactsTab } = useSelector((store: any) => store.getContacts);
-  console.log(contactsTab);
+  const [contactsTabUser] = useState(contactsTab.filter((item: { userID: string | any; }) => item.userID === _user.userID));
   const [contactsToList, setContactsToList] = useState([]);
   const _searchValue = useSelector(searchValue);
   const _isSuccess = useSelector(isSuccess);
-  console.log(_isSuccess)
-  const Adsd = getContactsFromFirebase();
-  console.log(Adsd);
 
   useEffect(() => {
     if (_searchValue.getSearchValue.searchValue.trim() === '') {
-      setContactsToList(contactsTab);
+      setContactsToList(contactsTabUser);
       return;
     }
     else {
       if (_searchValue.getSearchValue.searchValue.trim() !== "") {
         setContactsToList(
-          contactsTab.filter((contact: { name: string | any; }) => {
+          contactsTabUser.filter((contact: { name: string | any; }) => {
 				const filteredContact = `${contact.name}`;
 				return filteredContact
 			.toLowerCase()
-			.split(" ")
-			.join("")
-      .includes(_searchValue.getSearchValue.searchValue)
+		  .includes(_searchValue.getSearchValue.searchValue)
 			}
 			  )
 			);

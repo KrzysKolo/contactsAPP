@@ -8,7 +8,7 @@ import { AppDispatch } from './app/store';
 import { getContactsFromFirebase } from './features/getContacts/getContactsSlice';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from './components/Header/Header';
-import { isAuthenticated, stateLogin, stateUserName } from './features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateLogin } from './features/stateOfLogin/stateOfLoginSlice';
 import useWebsiteTitle from './hooks/useWebsiteTitle/useWebsiteTitle';
 
 
@@ -27,14 +27,9 @@ function App() {
     }
   };
 
-//  const checkUser = () => {
-//    const tokenData = JSON.parse(window.localStorage,getItem(''))
-//  };
-
   useEffect(() => {
     checkUser();
     dispatch(getContactsFromFirebase());
-    //checkUser();
   }, []);
 
   console.log(userName)

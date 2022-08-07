@@ -1,12 +1,12 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, VStack } from '@chakra-ui/react';
 import InputAddContact from '../../inputs/InputAddContact/InputAddContact';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
 import { TbWorld } from 'react-icons/tb'
 import ButtonInForm from '../../buttons/ButtonInForm/ButtonInForm';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-import { FormikValues, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { addAddressesContact, ContactAddresses, stateContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
@@ -15,6 +15,7 @@ import { addContactToFirebase, addContactToState, ContactToFirebase, setSuccess 
 import { storageImage } from '../../../firebase/config';
 import contactApi from '../../../api/contactApi';
 import { v4 as uuidv4 } from 'uuid';
+import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
 
 
 export type FormAddContactProps = {
@@ -22,7 +23,7 @@ export type FormAddContactProps = {
 }
 
 const FormAddContact = ({ onClose }: FormAddContactProps) => {
-  const regexURL = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
+  //const regexURL = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
   // DANE KONTAKTU
   const [name] = useState<string>("");
   const [email] = useState<string>("");
@@ -33,15 +34,15 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   const [description] = useState<string>("");
   const [typeContact, setTypeContact] = useState<string>("1");
 
-  const[facebookUrl, setFacebookUrl] = useState("")
-  const[linkedinUrl, setLinkedinUrl] = useState("")
-  const[githubUrl, setGithubUrl] = useState("")
-  const[youtubeUrl, setYoutubeUrl] = useState("")
-  const[instagramUrl, setInstagramUrl] = useState("")
-  const [webUrl, setWebUrl] = useState("")
-
+  const[facebookUrl] = useState("")
+  const[linkedinUrl] = useState("")
+  const[githubUrl] = useState("")
+  const[youtubeUrl] = useState("")
+  const[instagramUrl] = useState("")
+  const [webUrl] = useState("")
   const [valueRadio, setValueRadio] = useState("")
   const dispatch = useDispatch();
+  const _userId = useSelector(stateUser);
 
    //IMAGES
    const [file, setFile] = useState<File | any>([]);
@@ -98,6 +99,7 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     email: yup.string().email("Email zawiera błędy"),
     phone: yup.string().matches(/^[0-9]{9}$/, 'Numer telefonu musi skladać sie z cyfr'),
   });
+
   const onSubmitAddresses = () => {
     const addresses = {
       city: formik.values.city,
@@ -152,8 +154,8 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     github: githubUrl,
     youtube: youtubeUrl,
     web: webUrl,
-
   }
+
   const formikSM = useFormik({
     initialValues: initialValuesSM,
     validationSchema: validationSchemaSM,
@@ -167,7 +169,21 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   //ADD TO FIREBASE
   const _addresses = useSelector(stateContactAddresses);
   const _socialMedia = useSelector(stateContactSocialMedia);
-  console.log(_addresses);
+  let addressesInitialValue: ContactAddresses[] | any = {
+    city: "",
+    street: "",
+    code: "",
+    email: "",
+    phone: "",
+  };
+  let socialMediaInitialValue: SocialMediaUrl[] | any = {
+    facebook: "",
+    linkedin: "",
+    instagram: "",
+    github: "",
+    youtube: "",
+    web: "",
+  };
 
   const addContactOnServer = async (contactData: { name: string; description: string; typeContact: string; addresses: ContactAddresses[]; socialMedia: SocialMediaUrl[]; image: { name: any; url: any; }; }) => {
     try {
@@ -180,19 +196,24 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     }
   }
 
+
   const addContact = () => {
+
     const contactData = {
       idContact: uuidv4(),
+      userID: _userId.userID,
       name: formik.values.name,
       description: formik.values.description,
       typeContact: typeContact,
-      addresses: _addresses,
-      socialMedia: _socialMedia,
+      addresses: _addresses.length !== 0 ? _addresses : addressesInitialValue,
+      socialMedia: _socialMedia.length !== 0 ? _socialMedia : socialMediaInitialValue,
       image: image,
+
     };
-    dispatch(addContactToState(contactData));
-    addContactOnServer(contactData);
+      dispatch(addContactToState(contactData));
+      addContactOnServer(contactData);
     dispatch(setSuccess(true));
+
     onClose();
   };
   const closeFormAddContact = () => {

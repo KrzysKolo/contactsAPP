@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState, } from '../../app/store';
 
 export interface ContactAddresses  {
-  city?: string,
+  city: string,
   street?: string,
   code?: string,
   email?: string,

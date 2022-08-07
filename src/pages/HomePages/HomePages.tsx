@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { LeftPanel, RightPanel } from '../../components';
 import { HStack } from '@chakra-ui/react';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
-import { isAuthenticated } from '../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from '../../services/contacts/contacts';
+import axios from 'axios';
+import axiosClient from '../../api/contactApi';
 
 const HomePages = () => {
-  const navigate = useNavigate();
-
 
   useWebsiteTitle('Kontakty')
   return (
@@ -27,7 +29,3 @@ const HomePages = () => {
 }
 
 export default HomePages;
-
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
-}

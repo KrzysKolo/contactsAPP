@@ -6,6 +6,7 @@ import { SocialMediaUrl } from '../addSocialMediaToState/addSocialmediaToStateSl
 
 export interface ContactToFirebase  {
   idContact: string,
+  userID: string,
   name: string,
   description?: string,
   typeContact: string,

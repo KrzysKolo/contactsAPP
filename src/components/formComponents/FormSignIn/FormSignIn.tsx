@@ -6,7 +6,7 @@ import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { isAuthenticated, userNameOfLogged } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, userOfLogged } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -34,15 +34,20 @@ const FormSignIn = () => {
     validationSchema,
     onSubmit: async (values, actions) => {
       try {
-       /*  signInWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => navigate('/home')).catch((err) => alert(err.message));
-        actions.resetForm(); */
         const res = await axios.post('accounts:signInWithPassword', {
           email: formik.values.userName,
           password: formik.values.password,
           returnSecureToken: true,
         });
         console.log(res);
+        console.log(res.data.localId);
         dispatch(isAuthenticated(true));
+        dispatch(userOfLogged({
+          userID: res.data.localId,
+          email: formik.values.userName,
+          password: formik.values.password,
+          returnSecureToken: true,
+        }));
         window.localStorage.setItem('userContactsApp', `${formik.values.userName}`);
         actions.resetForm();
         navigate('/home');

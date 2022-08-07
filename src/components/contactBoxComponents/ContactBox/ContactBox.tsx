@@ -17,6 +17,7 @@ export type ContactBoxProps = {
 }
 
 const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
+  console.log(contact)
   return (
     <Stack
       background={contact.typeContact === "1" ? "blue.500" : "green.500"}
@@ -116,12 +117,13 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             margin='10px auto'
 
           >
-          <TextContact contact={contact.addresses.street} />
+             {contact.addresses.street ? <TextContact contact={contact.addresses.street } /> : <p></p>}
+
             <Box
               display="flex"
             >
-              <TextContact contact={contact.addresses.code} />
-              <TextContact contact={contact.addresses.city} />
+              {contact.addresses.code ? <TextContact contact={contact.addresses.code} /> : <p></p>}
+              {contact.addresses.city ? <TextContact contact={contact.addresses.city} /> : <p></p>}
             </Box>
         </Box>
           <Box

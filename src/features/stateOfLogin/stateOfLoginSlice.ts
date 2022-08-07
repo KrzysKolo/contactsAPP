@@ -3,13 +3,23 @@ import { RootState, } from '../../app/store';
 
 export type LoginStateType = {
   isLoginUser: boolean;
-  userName: string;
+  user: {
+    userID: string,
+    email: string,
+    password: string,
+    token: string,
+  };
 }
 
 const initialState: LoginStateType = {
   isLoginUser: false,
-  userName: "",
-};
+  user: {
+    userID: '',
+    email: '',
+    password: '',
+    token: ''
+    }
+  };
 
 const stateOfLoginSlice = createSlice({
   name: 'loginUser',
@@ -18,13 +28,13 @@ const stateOfLoginSlice = createSlice({
     isAuthenticated: (state, action) => {
       state.isLoginUser = action.payload;
     },
-    userNameOfLogged: (state, action) => {
-      state.userName = action.payload;
+    userOfLogged: (state, action) => {
+      state.user = action.payload;
     }
   }
 })
 
-export const { isAuthenticated, userNameOfLogged } = stateOfLoginSlice.actions;
+export const { isAuthenticated, userOfLogged } = stateOfLoginSlice.actions;
 export const stateLogin = (state: RootState) => state;
-export const stateUserName = (state: RootState) => state.stateOfLogin.userName;
+export const stateUser = (state: RootState) => state.stateOfLogin.user;
 export default stateOfLoginSlice.reducer;
