@@ -1,4 +1,4 @@
-import { Box, HStack, Stack, Text, VStack, Image, Flex } from '@chakra-ui/react';
+import { Box, HStack, Stack, Text, VStack, Image, Flex, Link, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { IoChevronUpSharp } from "react-icons/io5";
 import photoUsers from '../../../assets/image/users.png';
@@ -13,20 +13,21 @@ import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 import { removeContacts } from '../../../services/removeContacts/removeContacts';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { removeContact, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
-import { useParams } from 'react-router-dom';
+import { setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+import KModal from '../../KModal/KModal';
+import FormEditContact from '../../formComponents/FormEditContact/FormEditContact';
 
 export type ContactBoxProps = {
   contact: ContactInFirebase,
   onClick: () => void,
+  onOpen: () => void;
 }
 
-const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
-  console.log(contact.id)
+const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick, onOpen }) => {
+
   const dispatch = useDispatch<AppDispatch>();
-  const handleEditContact = () => {
-    console.log("edytuje kontakt")
-  };
+
+
 
   const handleRemoveContact = async () => {
     const id: string | any = contact.id;
@@ -37,10 +38,12 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
        } catch (error) {
         console.log(error);
       }
-    };
-
+  };
 
   return (
+    <>
+
+
     <Stack
       background={contact.typeContact === "1" ? "blue.500" : "green.500"}
       borderRadius='12px'
@@ -139,6 +142,7 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             margin='10px auto'
 
           >
+             {contact.addresses.country ? <TextContact contact={contact.addresses.country } /> : <p></p>}
              {contact.addresses.street ? <TextContact contact={contact.addresses.street } /> : <p></p>}
 
             <Box
@@ -205,7 +209,8 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
             fontSize='20px'
             cursor='pointer'
             _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
-            onClick={handleEditContact}
+            //onClick={handleEditContact}
+            onClick={onOpen}
           >
             <FaRegEdit />
           </Box>
@@ -214,26 +219,31 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
           padding='5px 15px'
         >
           {contact.socialMedia.facebook &&
-            <Box
-              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-              fontSize='20px'
-              cursor='pointer'
-              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
-            >
+            <Link href={contact.socialMedia.facebook} isExternal>
+              <Box
+                color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+                fontSize='20px'
+                cursor='pointer'
+                _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+              >
               <RiFacebookBoxFill />
-            </Box>
+              </Box>
+            </Link>
           }
           {contact.socialMedia.linkedin &&
-            <Box
-              color={contact.typeContact === "1" ? "blue.500" : "green.500"}
-              fontSize='20px'
-              cursor='pointer'
-              _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
-            >
-              <RiLinkedinBoxFill />
-            </Box>
+            <Link href={contact.socialMedia.linkedin} isExternal>
+              <Box
+                color={contact.typeContact === "1" ? "blue.500" : "green.500"}
+                fontSize='20px'
+                cursor='pointer'
+                _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
+              >
+                <RiLinkedinBoxFill />
+              </Box>
+            </Link>
           }
           {contact.socialMedia.github &&
+            <Link href={contact.socialMedia.github} isExternal>
             <Box
               color={contact.typeContact === "1" ? "blue.500" : "green.500"}
               fontSize='20px'
@@ -241,9 +251,11 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
               _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
             >
               <RiGithubFill />
-            </Box>
+              </Box>
+            </Link>
           }
           {contact.socialMedia.youtube &&
+            <Link href={contact.socialMedia.youtube} isExternal>
             <Box
               color={contact.typeContact === "1" ? "blue.500" : "green.500"}
               fontSize='20px'
@@ -251,9 +263,11 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
               _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
             >
               <RiYoutubeFill />
-            </Box>
+              </Box>
+              </Link>
           }
-          {contact.socialMedia.youtube &&
+          {contact.socialMedia.instagram &&
+            <Link href={contact.socialMedia.instagram} isExternal>
             <Box
               color={contact.typeContact === "1" ? "blue.500" : "green.500"}
               fontSize='20px'
@@ -261,9 +275,11 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
               _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
             >
               <RiInstagramLine />
-            </Box>
+              </Box>
+              </Link>
           }
           {contact.socialMedia.web &&
+            <Link href={contact.socialMedia.web} isExternal>
             <Box
               color={contact.typeContact === "1" ? "blue.500" : "green.500"}
               fontSize='20px'
@@ -271,14 +287,16 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick }) => {
               _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
             >
               <TbWorld />
-            </Box>
+              </Box>
+            </Link>
           }
 
 
         </HStack>
       </Flex>
 
-    </Stack>
+      </Stack>
+      </>
   )
 }
 

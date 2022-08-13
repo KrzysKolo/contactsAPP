@@ -1,85 +1,112 @@
-
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, VStack } from '@chakra-ui/react';
-import InputAddContact from '../../inputs/InputAddContact/InputAddContact';
-import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
-import { TbWorld } from 'react-icons/tb'
-import ButtonInForm from '../../buttons/ButtonInForm/ButtonInForm';
+import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
+import { TbWorld } from 'react-icons/tb';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import InputAddContact from '../../inputs/InputAddContact/InputAddContact';
+import ButtonInForm from '../../buttons/ButtonInForm/ButtonInForm';
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch, useSelector } from 'react-redux';
-import { addAddressesContact, ContactAddresses, stateContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
-import { addSocialMediaUrlContact, SocialMediaUrl, stateContactSocialMedia } from '../../../features/addSocialMediaToState/addSocialmediaToStateSlice';
-
 import { storageImage } from '../../../firebase/config';
-import contactApi from '../../../api/contactApi';
-import { v4 as uuidv4 } from 'uuid';
-import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
-import { addContactToFirebase, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
-import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
+import { addAddressesContact, ContactAddresses, stateContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSocialMediaUrlContact, SocialMediaUrl, stateContactSocialMedia } from '../../../features/addSocialMediaToState/addSocialmediaToStateSlice';
+import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri';
+import { setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+export type FormEditContactProps = {
+  //contact: ContactInFirebase[];
+  handleEditContact: (
+    name?: string | any,
+    description?: string |any,
+    typeContact?: string |any,
+    addresses?: ContactAddresses[] |any,
+    socialMedia?: SocialMediaUrl[] |any,
+    image?: { name: any, url: any,
+  })  => void;
+   /*  name: string,
+    description: string,
+    typeContact: string,
+    addresses: {
+      city: string,
+      street: string,
+      code: string,
+      country:string,
+      email: string,
+      phone: string,
+    },
+    socialMedia: {
+      facebook: string,
+      linkedin: string,
+      instagram: string,
+      github: string,
+      youtube: string,
+      web: string,
+    },
+  image: {
+    name: string,
+    url: string,
+  }, id: string, ) => Promise<void | any>; */
+  //handleEditContact: () => void;
+  onClose: () => void;
+  onOpen?: () => void;
+  contact: ContactInFirebase | any,
+};
 
+const FormEditContact: React.FC<FormEditContactProps> = ({ handleEditContact, onClose, contact }) => {
 
-export type FormAddContactProps = {
-  onClose: () => void,
-}
-
-const FormAddContact = ({ onClose }: FormAddContactProps) => {
-  //const regexURL = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
-  // DANE KONTAKTU
-  const [name] = useState<string>("");
-  const [email] = useState<string>("");
-  const [phone] = useState<string>("");
-  const [street] = useState<string>("");
-  const [code] = useState<string>("");
-  const [city] = useState<string>("");
-  const [country] = useState<string>("");
-  const [description] = useState<string>("");
-  const [typeContact, setTypeContact] = useState<string>("1");
-
-  const[facebookUrl] = useState("")
-  const[linkedinUrl] = useState("")
-  const[githubUrl] = useState("")
-  const[youtubeUrl] = useState("")
-  const[instagramUrl] = useState("")
-  const [webUrl] = useState("")
-  const [valueRadio, setValueRadio] = useState("")
   const dispatch = useDispatch();
-  const _userId = useSelector(stateUser);
 
-   //IMAGES
-   const [file, setFile] = useState<File | any>([]);
-   const [errorFile, setErrorFile] = useState("");
-   const types = ['image/png', 'image/jpeg', 'image/jpg'];
-   const [url, setUrl] = useState<string>("")
-   const [imageName, setImageName] = useState<string>("")
+  const [name] = useState<string>(contact.name);
+  const [email] = useState<string>(contact.addresses.email);
+  const [phone] = useState<string>(contact.addresses.phone);
+  const [street] = useState<string>(contact.addresses.street);
+  const [code] = useState<string>(contact.addresses.code);
+  const [city] = useState<string>(contact.addresses.city);
+  const [country] = useState<string>(contact.addresses.country);
+  const [description] = useState<string>(contact.description);
+  const [typeContact, setTypeContact] = useState<string>(contact.typeContact);
 
-   const onFileChange = (e: any) => {
-      const image = e.target.files[0];
-      if (image )  {
-       setFile(image);
-       setErrorFile('')
-     } else {
-       setFile([]);
-       setErrorFile('Wybierz plik .jpg lub .png');
-     }
-   }
-   useEffect(() => {
-     onHandleAdd();
-   }, [file]);
+  const[facebookUrl] = useState<string>(contact.socialMedia.facebook)
+  const[linkedinUrl] = useState<string>(contact.socialMedia.linkedin)
+  const[githubUrl] = useState<string>(contact.socialMedia.github)
+  const[youtubeUrl] = useState<string>(contact.socialMedia.youtube)
+  const[instagramUrl] = useState<string>(contact.socialMedia.instagram)
+  const [webUrl] = useState<string>(contact.socialMedia.web)
+  const [valueRadio, setValueRadio] = useState<string>("")
 
-   const onHandleAdd = async () => {
-    const storageRef = storageImage.ref('images');
-    const fileRef = storageRef.child(file.name);
-    await fileRef.put(file)
-    setImageName(file.name)
-    setUrl(await fileRef.getDownloadURL())
-  };
+  //IMAGES
+  const [file, setFile] = useState<File | any>([]);
+  const [errorFile, setErrorFile] = useState("");
+  const types = ['image/png', 'image/jpeg', 'image/jpg'];
+  const [url, setUrl] = useState<string>(contact.image.url)
+  const [imageName, setImageName] = useState<string>(contact.image.name)
 
-  let image: { name: string | any, url: string | any } = {
-    name: imageName,
-    url: url,
-  };
+  const onFileChange = (e: any) => {
+     const image = e.target.files[0];
+     if (image )  {
+      setFile(image);
+      setErrorFile('')
+    } else {
+      setFile([]);
+      setErrorFile('Wybierz plik .jpg lub .png');
+    }
+  }
+  useEffect(() => {
+    onHandleAdd();
+  }, [file]);
+
+  const onHandleAdd = async () => {
+   const storageRef = storageImage.ref('images');
+   const fileRef = storageRef.child(file.name);
+   await fileRef.put(file)
+   setImageName(file.name)
+   setUrl(await fileRef.getDownloadURL())
+ };
+
+ let image: { name: string | any, url: string | any } = {
+   name: imageName,
+   url: url,
+ };
 
   // ADDRESSES
 
@@ -172,61 +199,35 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     setValueRadio('');
   };
 
-  //ADD TO FIREBASE
   const _addresses = useSelector(stateContactAddresses);
   const _socialMedia = useSelector(stateContactSocialMedia);
-  let addressesNoData: ContactAddresses[] | any = {
-    city: "",
-    street: "",
-    code: "",
-    country:"",
-    email: "",
-    phone: "",
-  };
-  let socialMediaNoData: SocialMediaUrl[] | any = {
-    facebook: "",
-    linkedin: "",
-    instagram: "",
-    github: "",
-    youtube: "",
-    web: "",
-  };
 
-  const addContactOnServer = async (contactData: { name: string; description: string; typeContact: string; addresses: ContactAddresses[]; socialMedia: SocialMediaUrl[]; image: { name: any; url: any; }; }) => {
-    try {
-      const res: ContactInFirebase = await contactApi.post(`/contacts.json`, contactData);
-      dispatch(addContactToFirebase(res));
-
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
-
-
-  const addContact = () => {
-
-    const contactData = {
-      idContact: uuidv4(),
-      userID: _userId.userID,
-      name: formik.values.name,
-      description: formik.values.description,
-      typeContact: typeContact,
-      addresses: _addresses.length !== 0 ? _addresses : addressesNoData,
-      socialMedia: _socialMedia.length !== 0 ? _socialMedia : socialMediaNoData,
-      image: image,
-
-    };
-    addContactOnServer(contactData);
+  const updateContact = () => {
+    handleEditContact({ name: formik.values.name, description: formik.values.description, typeContact: typeContact,  addresses: _addresses.length !==0 ? _addresses : {
+      city: formik.values.city,
+      street: formik.values.street,
+      code: formik.values.code,
+      country: formik.values.country,
+      email: formik.values.email,
+      phone: formik.values.phone,
+    },
+    socialMedia: _socialMedia.length !== 0 ? _socialMedia :
+    {
+      facebook: formikSM.values.facebook,
+    linkedin: formikSM.values.linkedin,
+    instagram: formikSM.values.instagram,
+    github: formikSM.values.github,
+    youtube: formikSM.values.youtube,
+    web: formikSM.values.web,}, image })
     dispatch(setSuccess(true));
     dispatch(setLoading(true));
 
-    onClose();
-  };
-  const closeFormAddContact = () => {
-    onClose();
+      onClose();
   };
 
+  const closeFormEditContact = () => {
+    onClose();
+  };
   return (
     <>
       <form
@@ -648,8 +649,8 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
             justifyContent='flex-end'
             paddingTop='15px'
             >
-            <ButtonInForm title='Zapisz kontakt' onSubmit={addContact} variant='submit' />
-            <ButtonInForm title='Anuluj' onReset={closeFormAddContact} variant='reset' />
+            <ButtonInForm title='Zapisz zmiany' onSubmit={updateContact} variant='submit' />
+            <ButtonInForm title='Anuluj' onReset={closeFormEditContact} variant='reset' />
           </Flex>
         </Box>
       </form>
@@ -657,4 +658,4 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   )
 }
 
-export default FormAddContact;
+export default FormEditContact;

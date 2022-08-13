@@ -6,6 +6,7 @@ export interface ContactInFirebase  {
   id?: string,
   userID: string,
   name: string,
+  country?: string,
   description?: string,
   typeContact: string,
   addresses?: ContactAddresses[] | any,

@@ -15,7 +15,7 @@ const FormLogin = () => {
       <Box
         width='350px'
       >
-        <Image src={logo} width='100%' />
+        <Image src={logo} width='100%' marginBottom='20px' />
         <TextFormLogin text='ContactsApp to aplikacja, która w jednym miejscu przechowuje Twoje kontakty.' />
         <LoginLinkButton link='/signIn' name="Zaloguj się!" />
         <TextFormLogin text='Jeśli nie masz konta' />
