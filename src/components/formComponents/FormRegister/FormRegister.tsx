@@ -11,6 +11,7 @@ import { auth } from '../../../firebase/config';
 import { useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import axios from 'axios';
+import instance from '../../../api/contactAuth';
 
 
 const FormRegister = () => {
@@ -37,7 +38,7 @@ const FormRegister = () => {
         return;
       } else {
         try {
-          const res = await axios.post('accounts:signUp', {
+          const res = await instance.post('accounts:signUp', {
             email: formik.values.userName,
             password: formik.values.password,
             returnSecureToken: true,

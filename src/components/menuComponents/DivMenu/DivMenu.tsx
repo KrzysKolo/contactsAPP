@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 //CHAKRA COMPONENTS
 import { Box, Flex, HStack, Image, Button } from '@chakra-ui/react';
 //REACT-ROUTER-DOM
@@ -6,9 +6,9 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 //FILES
 import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
-import user from './../../../assets/image/user.jpg';
-import { useDispatch } from 'react-redux';
-import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import user from './../../../assets/image/user.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { isAuthenticated, stateUser, stateUserGoogle, userOfLogged, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
 ;
 
@@ -22,11 +22,41 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const navigate = useNavigate();
   const [storage, setStorage] = useStateStorage("klucz", "")
 
+  const [userPhoto, setUserPhoto] = useState<string>('')
+  const _user = useSelector(stateUser);
+  const _userGoogle = useSelector(stateUserGoogle);
+
+  useEffect(() => {
+    if (_user.email.length !== 0) {
+      setUserPhoto(_user.email)
+    } else if (_userGoogle.photo.length !== 0) {
+      setUserPhoto(_userGoogle.photo);
+    }
+  }, [])
+
+
+  console.log(userPhoto);
+
+  const userEmail = {
+    userID: '',
+    email: '',
+    password: '',
+    token: ''
+  };
+
+  const userGoogle = {
+    userName: '',
+    email: '',
+    photo: '',
+  };
 
   const handleChangeStateLogin = () => {
     navigate('/');
     dispatch(isAuthenticated(false));
     window.localStorage.removeItem('userContactsApp');
+    dispatch(userOfLogged(userEmail));
+    dispatch(userOfLoggedWithGoogle(userGoogle));
+
   };
 
   const handleOpenProfile = () => {
@@ -77,14 +107,21 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
             marginRight='2rem'
             boxShadow='base'
             onClick={handleOpenProfile}
-          >
-            <Image
-              src={user}
-              alt='Jan Nowak'
-              borderRadius='50%'
-              width='60px'
-
-            />
+            >
+              {userPhoto
+                ? <Image
+                  src={_userGoogle.photo}
+                  alt='Jan Nowak'
+                  borderRadius='50%'
+                  width='60px'
+                />
+                : <Image
+                  src={user}
+                  alt='Jan Nowak'
+                  borderRadius='50%'
+                  width='60px'
+                />
+              }
           </Box>
           <Link to='/'>
             <Button

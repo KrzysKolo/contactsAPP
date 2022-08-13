@@ -1,6 +1,6 @@
 import firebase  from 'firebase/compat/app';
 import 'firebase/compat/storage';
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 
 const firebaseConfig = ({
@@ -15,6 +15,7 @@ const firebaseConfig = ({
 
 firebase.initializeApp(firebaseConfig);
 const storageImage = firebase.storage();
+export const GoogleProvider = new GoogleAuthProvider();
 
 export { storageImage };
 export const auth = getAuth();

@@ -6,20 +6,23 @@ import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { isAuthenticated, userOfLogged } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, userOfLogged, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { auth } from '../../../firebase/config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, GoogleProvider } from '../../../firebase/config';
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import axios from '../../../api/contactAuth';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
+import instance from '../../../api/contactAuth';
+import { resourceLimits } from 'worker_threads';
 
 
 const FormSignIn = () => {
   const [valueName] = useState<string>('');
   const [valuePassword] = useState<string>('');
   const [userNameInStorage, setUserNameInStorage] = useStateStorage("", "")
+
 
   const validationSchema = () => yup.object().shape({
     userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(30, 'nazwa użytkownika nie może być dłuższa jak 30 znaków').email('Email zawiera błędy'),
@@ -34,7 +37,7 @@ const FormSignIn = () => {
     validationSchema,
     onSubmit: async (values, actions) => {
       try {
-        const res = await axios.post('accounts:signInWithPassword', {
+        const res = await instance.post('accounts:signInWithPassword', {
           email: formik.values.userName,
           password: formik.values.password,
           returnSecureToken: true,
@@ -72,6 +75,22 @@ const FormSignIn = () => {
 
   const signInWithGoogle = () => {
     console.log('loguje sie za pomoca Google')
+    signInWithPopup(auth, GoogleProvider)
+      .then((result) => {
+        console.log(result)
+        const userGoogleData = {
+          userName: result.user.displayName,
+          email: result.user.email,
+          photo: result.user.photoURL,
+        }
+        dispatch(userOfLoggedWithGoogle(userGoogleData));
+        dispatch(isAuthenticated(true));
+        window.localStorage.setItem('userContactsApp', `${result.user.displayName}`);
+        navigate('/home');
+      })
+      .catch((error) => {
+      console.log(error);
+    })
   }
   const signInWithFacebook = () => {
     console.log('loguje sie za pomoca Facebook')
