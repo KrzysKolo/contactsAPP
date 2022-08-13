@@ -45,6 +45,7 @@ const HomePages = () => {
     <main>
       <HStack
         width='1180px'
+        height='80vh'
         alignItems='flex-start'
         justifyContent='space-evenly'
         padding='2rem'

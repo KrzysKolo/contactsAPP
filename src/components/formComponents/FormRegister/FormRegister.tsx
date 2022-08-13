@@ -50,12 +50,6 @@ const FormRegister = () => {
         catch (ex) {
           console.log(ex)
         }
-        /*   createUserWithEmailAndPassword(auth, formik.values.userName, formik.values.password).then(() => {
-             navigate("/home");
-             dispatch(changeStateLogin(true));
-             actions.resetForm();
-           })
-             .catch((err) => alert(err.message)); */
       }
 
       }

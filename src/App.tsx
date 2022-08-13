@@ -5,11 +5,11 @@ import { HomePages, LoginFormPages, SignInForm, RegisterForm, ProfilePages, NotF
 import './App.css';
 import { AppDispatch } from './app/store';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Header from './components/Header/Header';
 import { isAuthenticated, stateLogin } from './features/stateOfLogin/stateOfLoginSlice';
 import useWebsiteTitle from './hooks/useWebsiteTitle/useWebsiteTitle';
 import { useDispatch, useSelector} from 'react-redux';
 import { setLoading } from './features/firebaseContacts/firebaseContactsSlice';
+import { Footer, Header } from './components';
 
 
 
@@ -53,6 +53,7 @@ function App() {
               <Route path="/" element={<LoginFormPages />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            { _userLoginState.stateOfLogin.isLoginUser ? <Footer /> : <p></p> }
           </Router>
         </Flex>
       </ColorModeProvider>
