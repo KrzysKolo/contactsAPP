@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //CHAKRA COMPONENTS
-import { Box, Flex, HStack, Image, Button } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, Button, Text } from '@chakra-ui/react';
 //REACT-ROUTER-DOM
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 //FILES
@@ -8,7 +8,7 @@ import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import user from './../../../assets/image/user.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { isAuthenticated, stateUser, stateUserGoogle, userOfLogged, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateUser, stateUserFacebook, stateUserGoogle, userOfLogged, userOfLoggedWithFacebook, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
 ;
 
@@ -25,6 +25,7 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const [userPhoto, setUserPhoto] = useState<string>('')
   const _user = useSelector(stateUser);
   const _userGoogle = useSelector(stateUserGoogle);
+  const _userFacebook = useSelector(stateUserFacebook);
 
   useEffect(() => {
     if (_user.email.length !== 0) {
@@ -32,9 +33,12 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
     } else if (_userGoogle.photo.length !== 0) {
       setUserPhoto(_userGoogle.photo);
     }
+    else {
+      setUserPhoto(_userFacebook.photo);
+    }
   }, [])
 
-
+console.log(_userFacebook.photo)
   console.log(userPhoto);
 
   const userEmail = {
@@ -50,12 +54,19 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
     photo: '',
   };
 
+  const userFacebook = {
+    userName: '',
+    email: '',
+    photo: '',
+  };
+
   const handleChangeStateLogin = () => {
     navigate('/');
     dispatch(isAuthenticated(false));
     window.localStorage.removeItem('userContactsApp');
     dispatch(userOfLogged(userEmail));
     dispatch(userOfLoggedWithGoogle(userGoogle));
+    dispatch(userOfLoggedWithFacebook(userFacebook));
 
   };
 
@@ -89,7 +100,8 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
           width='100%'
           src={logo}
         />
-      </Box>
+        </Box>
+        <Text>{userPhoto}</Text>
       <Flex>
         {menuItem}
       </Flex>
@@ -110,7 +122,7 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
             >
               {userPhoto
                 ? <Image
-                  src={_userGoogle.photo}
+                  src={userPhoto}
                   alt='Jan Nowak'
                   borderRadius='50%'
                   width='60px'

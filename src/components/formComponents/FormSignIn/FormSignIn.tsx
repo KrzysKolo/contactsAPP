@@ -6,11 +6,11 @@ import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { isAuthenticated, userOfLogged, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, userOfLogged, userOfLoggedWithFacebook, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { auth, GoogleProvider } from '../../../firebase/config';
+import { auth, FacebookProvider, GoogleProvider } from '../../../firebase/config';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import axios from '../../../api/contactAuth';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
@@ -94,7 +94,23 @@ const FormSignIn = () => {
   }
   const signInWithFacebook = () => {
     console.log('loguje sie za pomoca Facebook')
-  }
+    signInWithPopup(auth, FacebookProvider)
+      .then((result) => {
+        console.log(result)
+        const userFacebookData = {
+          userName: result.user.displayName,
+          email: result.user.email,
+          photo: result.user.photoURL,
+        }
+        dispatch(userOfLoggedWithFacebook(userFacebookData));
+        dispatch(isAuthenticated(true));
+        window.localStorage.setItem('userContactsApp', `${result.user.displayName}`);
+        navigate('/home');
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  };
 
   return (
     <Flex
@@ -117,7 +133,6 @@ const FormSignIn = () => {
             error={formik.errors.userName}
             touched={formik.touched.userName}
           />
-
           <InputSign
             name='password'
             placeholder='password'
