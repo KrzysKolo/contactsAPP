@@ -44,8 +44,6 @@ const FormSignIn = () => {
           password: formik.values.password,
           returnSecureToken: true,
         });
-        console.log(res);
-        console.log(res.data.localId);
         dispatch(isAuthenticated(true));
         dispatch(userOfLogged({
           userID: res.data.localId,
@@ -68,7 +66,6 @@ const FormSignIn = () => {
   let navigate = useNavigate();
 
   const signInWithGoogle = () => {
-    console.log('loguje sie za pomoca Google')
     signInWithPopup(auth, GoogleProvider)
       .then((result) => {
         console.log(result)
@@ -87,7 +84,6 @@ const FormSignIn = () => {
     })
   }
   const signInWithFacebook = () => {
-    console.log('loguje sie za pomoca Facebook')
     signInWithPopup(auth, FacebookProvider)
       .then((result) => {
         console.log(result)

@@ -42,8 +42,6 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
     }
   }, [])
 
-  console.log(userPhoto);
-
   const userEmail = {
     userID: '',
     email: '',

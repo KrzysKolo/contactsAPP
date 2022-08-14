@@ -6,6 +6,7 @@ import getSearchValueSliceReducer from '../features/getSearchValue/getSearchValu
 import addAddressesToStateReducer from '../features/addAddressesToState/addAddressesToStateSlice';
 import addSocialmediaToStateReducer from '../features/addSocialMediaToState/addSocialmediaToStateSlice';
 import firebaseContactsReducer from '../features/firebaseContacts/firebaseContactsSlice';
+//import toastReducer from '../features/toast/toastSlice';
 
 
 export const store = configureStore({
@@ -18,7 +19,7 @@ export const store = configureStore({
     getSearchValue: getSearchValueSliceReducer,
     addAddressesToState: addAddressesToStateReducer,
     addSocialmediaToState: addSocialmediaToStateReducer,
-
+    //toast: toastReducer,
   },
 });
 

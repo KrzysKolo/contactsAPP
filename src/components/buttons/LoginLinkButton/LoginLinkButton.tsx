@@ -18,7 +18,7 @@ const LoginLinkButton: React.FC<LoginLinkButtonProps> = ({ link, name}) => {
           borderWidth='2px'
           borderRadius='12px'
           color="blue.500"
-          colorScheme="secondary"
+          //colorScheme="secondary"
           fontFamily="Orbitron"
           w="100%"
           fontSize="18px"

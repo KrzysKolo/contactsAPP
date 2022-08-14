@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LeftPanel, RightPanel } from '../../components';
+import { LeftPanel, Loading, RightPanel } from '../../components';
 import { HStack } from '@chakra-ui/react';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ const HomePages = () => {
   const _user = useSelector(stateUser);
   const _isSuccess = useSelector(isSuccess);
   const _isLoading = useSelector(isLoading);
-  console.log(_isSuccess)
 
   const fetchContacts = async () => {
     try {
@@ -24,8 +23,6 @@ const HomePages = () => {
       for (const key in res.data) {
         contactsTab.push({ ...res.data[key], id: key })
       }
-
-      console.log(contactsTab)
       dispatch(getContact(contactsTab));
       dispatch(setLoading(false));
       dispatch(setSuccess(false));
@@ -45,13 +42,13 @@ const HomePages = () => {
     <main>
       <HStack
         width='1180px'
-        height='80vh'
+        minHeight='80vh'
         alignItems='flex-start'
         justifyContent='space-evenly'
         padding='2rem'
       >
         {_isLoading
-          ? (<p>Loading</p>)
+          ? (<Loading />)
           : (<>
               <LeftPanel />
               <RightPanel />

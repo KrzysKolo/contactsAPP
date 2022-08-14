@@ -19,7 +19,6 @@ function App() {
   const [userName, setUserName] = useState(window.localStorage.getItem('userContactsApp'))
 
   useWebsiteTitle('ContactsApp');
-  console.log(_userLoginState.stateOfLogin.isLoginUser);
 
   const checkUser = () => {
     const tokenData = window.localStorage.getItem('userContactsApp');
@@ -28,16 +27,11 @@ function App() {
     }
   };
 
-  //const _isUserLogged = useSelector(stateLogin)
-
-
-
   useEffect(() => {
     checkUser();
     dispatch(setLoading(true));
   }, []);
 
-  console.log(userName)
   return (
     <ChakraProvider>
       <ColorModeProvider>

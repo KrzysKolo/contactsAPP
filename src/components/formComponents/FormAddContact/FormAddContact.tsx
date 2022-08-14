@@ -16,8 +16,10 @@ import { storageImage } from '../../../firebase/config';
 import contactApi from '../../../api/contactApi';
 import { v4 as uuidv4 } from 'uuid';
 import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
-import { addContactToFirebase, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+import { addContactToFirebase, isSuccess, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
+//import { addToast, getStateToast } from '../../../features/toast/toastSlice';
+//import { useToastHook } from '../../../hooks/useToastHook/useToastHook';
 
 
 export type FormAddContactProps = {
@@ -25,7 +27,10 @@ export type FormAddContactProps = {
 }
 
 const FormAddContact = ({ onClose }: FormAddContactProps) => {
-  //const regexURL = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)';
+  //const _toast = useSelector(getStateToast);
+  const _isSuccess = useSelector(isSuccess);
+  console.log(_isSuccess)
+
   // DANE KONTAKTU
   const [name] = useState<string>("");
   const [email] = useState<string>("");
@@ -52,7 +57,10 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
    const [errorFile, setErrorFile] = useState("");
    const types = ['image/png', 'image/jpeg', 'image/jpg'];
    const [url, setUrl] = useState<string>("")
-   const [imageName, setImageName] = useState<string>("")
+  const [imageName, setImageName] = useState<string>("")
+  //const [state, newToast] = useToastHook();
+
+
 
    const onFileChange = (e: any) => {
       const image = e.target.files[0];
@@ -196,7 +204,9 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     try {
       const res: ContactInFirebase = await contactApi.post(`/contacts.json`, contactData);
       dispatch(addContactToFirebase(res));
-
+      //dispatch(setSuccess(true));
+      //dispatch(addToast({ title: "Dodano dane do bazy", status: "success" }));
+      //dispatch(setSuccess(false));
     }
     catch (error) {
       console.log(error)

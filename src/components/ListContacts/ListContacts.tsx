@@ -32,10 +32,6 @@ const ListContacts: React.FC = () => {
       setContactsTabUser(_contactsTab.filter((item: { userID: string | any; }) => item.userID === _user.userID));
   }, [_contactsTab,]);
 
-  console.log(_contactsTab)
-  console.log(_user.userID)
-  console.log(contactsTabUser)
-
   useEffect(() => {
     if (_searchValue.getSearchValue.searchValue.trim() === '') {
       setContactsToList(contactsTabUser);
@@ -56,8 +52,6 @@ const ListContacts: React.FC = () => {
 
   return (
     <>
-
-
       <Box
         paddingTop='2rem'
       >
