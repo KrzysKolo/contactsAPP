@@ -1,6 +1,6 @@
 import firebase  from 'firebase/compat/app';
 import 'firebase/compat/storage';
-import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
 
 
 const firebaseConfig = ({

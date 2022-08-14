@@ -6,7 +6,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 //FILES
 import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
-import user from './../../../assets/image/user.png';
+import userP from './../../../assets/image/user.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { isAuthenticated, stateUser, stateUserFacebook, stateUserGoogle, userOfLogged, userOfLoggedWithFacebook, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
@@ -23,6 +23,7 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const [storage, setStorage] = useStateStorage("klucz", "")
 
   const [userPhoto, setUserPhoto] = useState<string>('')
+  const [userName, setName] = useState<string>('')
   const _user = useSelector(stateUser);
   const _userGoogle = useSelector(stateUserGoogle);
   const _userFacebook = useSelector(stateUserFacebook);
@@ -30,15 +31,17 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   useEffect(() => {
     if (_user.email.length !== 0) {
       setUserPhoto(_user.email)
+      setName(_user.email)
     } else if (_userGoogle.photo.length !== 0) {
       setUserPhoto(_userGoogle.photo);
+      setName(_userGoogle.userName);
     }
     else {
       setUserPhoto(_userFacebook.photo);
+      setName(_userFacebook.userName);
     }
   }, [])
 
-console.log(_userFacebook.photo)
   console.log(userPhoto);
 
   const userEmail = {
@@ -101,7 +104,6 @@ console.log(_userFacebook.photo)
           src={logo}
         />
         </Box>
-        <Text>{userPhoto}</Text>
       <Flex>
         {menuItem}
       </Flex>
@@ -123,13 +125,13 @@ console.log(_userFacebook.photo)
               {userPhoto
                 ? <Image
                   src={userPhoto}
-                  alt='Jan Nowak'
+                  alt={userName}
                   borderRadius='50%'
                   width='60px'
                 />
                 : <Image
-                  src={user}
-                  alt='Jan Nowak'
+                  src={userP}
+                  alt={userName}
                   borderRadius='50%'
                   width='60px'
                 />

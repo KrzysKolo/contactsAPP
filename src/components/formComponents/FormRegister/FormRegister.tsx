@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, HStack, Image } from '@chakra-ui/react'
 import { LoginButton } from '../../buttons'
 import { InputSign } from '../../inputs'
 import logo from '../../../assets/image/Contact-AppLogo2.png';
@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import axios from 'axios';
 import instance from '../../../api/contactAuth';
+import TextLink from '../TextLink/TextLink';
 
 
 const FormRegister = () => {
@@ -28,7 +29,7 @@ const FormRegister = () => {
       passwordConfirm: passwordConfirm,
     },
     validationSchema: yup.object({
-      userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(30, 'nazwa użytkownika nie może być dłuższa jak 30 znaków').email('Email zawiera błędy'),
+      userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(50, 'nazwa użytkownika nie może być dłuższa jak 50 znaków').email('Email zawiera błędy'),
       password: yup.string().required('Hasło jest wymagane'),
       passwordConfirm: yup.string().required('Hasła muszą być identyczne'),
     }),
@@ -97,7 +98,14 @@ const FormRegister = () => {
             name='passwordConfirm'
             touched={formik.touched.passwordConfirm}
              />
-        <LoginButton onClick={formik.handleSubmit}  name="Zarejestruj się!" />
+          <LoginButton onClick={formik.handleSubmit} name="Zarejestruj się!" />
+          <HStack
+            justifyContent='space-between'
+
+          >
+            <TextLink text='' pathInRouting='' />
+            <TextLink text='Zaloguj się' pathInRouting='/signin' />
+          </HStack>
       </form>
 
     </Box>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Image, Flex, Text } from '@chakra-ui/react';
+import { Box, Image, Flex, Text, HStack } from '@chakra-ui/react';
 import logo from '../../../assets/image/Contact-AppLogo2.png';
 import { LoginButton } from '../../buttons';
 import { InputSign } from '../../inputs';
@@ -16,6 +16,8 @@ import axios from '../../../api/contactAuth';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
 import instance from '../../../api/contactAuth';
 import { resourceLimits } from 'worker_threads';
+import ForgetPassword from '../../ForgetPassword/ForgetPassword';
+import TextLink from '../TextLink/TextLink';
 
 
 const FormSignIn = () => {
@@ -25,7 +27,7 @@ const FormSignIn = () => {
 
 
   const validationSchema = () => yup.object().shape({
-    userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(30, 'nazwa użytkownika nie może być dłuższa jak 30 znaków').email('Email zawiera błędy'),
+    userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(50, 'nazwa użytkownika nie może być dłuższa jak 50 znaków').email('Email zawiera błędy'),
     password: yup.string().required('Hasło jest wymagane')
   });
 
@@ -64,14 +66,6 @@ const FormSignIn = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   let navigate = useNavigate();
-/*   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate('/home')
-        dispatch(isAuthenticated(true));
-      }
-    })
-  }); */
 
   const signInWithGoogle = () => {
     console.log('loguje sie za pomoca Google')
@@ -143,7 +137,14 @@ const FormSignIn = () => {
             error={formik.errors.password}
             touched={formik.touched.password}
           />
-          <LoginButton onClick={formik.handleSubmit}  name="Zaloguj się emailem" />
+          <LoginButton onClick={formik.handleSubmit} name="Zaloguj się emailem" />
+          <HStack
+            justifyContent='space-between'
+
+          >
+            <TextLink text='Zarejestruj się' pathInRouting='/register' />
+            <TextLink text='Nie pamiętam hasła' pathInRouting='/forget-password' />
+          </HStack>
         </form>
         <Flex
           justifyContent='space-between'

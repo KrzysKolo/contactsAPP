@@ -9,7 +9,7 @@ import { isAuthenticated, stateLogin } from './features/stateOfLogin/stateOfLogi
 import useWebsiteTitle from './hooks/useWebsiteTitle/useWebsiteTitle';
 import { useDispatch, useSelector} from 'react-redux';
 import { setLoading } from './features/firebaseContacts/firebaseContactsSlice';
-import { Footer, Header } from './components';
+import { Footer, FormForgetPassword, Header } from './components';
 
 
 
@@ -50,6 +50,7 @@ function App() {
               <Route path="/profile" element={ _userLoginState.stateOfLogin.isLoginUser || userName ? <ProfilePages /> : <Navigate to='/' />} />
               <Route path="/signin" element={<SignInForm />} />
               <Route path="/register" element={<RegisterForm />} />
+              <Route path="/forget-password" element={<FormForgetPassword />} />
               <Route path="/" element={<LoginFormPages />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
