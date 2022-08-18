@@ -8,10 +8,11 @@ import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import userP from './../../../assets/image/user.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { isAuthenticated, stateEmailAndPassword, stateUser, stateUserGoogleOrFacebook, userOfLogged, userOfLoggedEmailAndPassword, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateEmailAndPasswordPhoto, stateUser, stateUserGoogleOrFacebook, userOfLogged, userOfLoggedEmailAndPasswordPhoto, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
-import { getUserProfile, setLoginEmail } from '../../../features/userProfile/userProfileSlice';
+import { getUserData, getUserProfile, isSuccessUser, setLoginEmail } from '../../../features/userProfile/userProfileSlice';
 import { tab } from '@testing-library/user-event/dist/types/convenience';
+import { getContact } from '../../../features/firebaseContacts/firebaseContactsSlice';
 
 export type DivMenuProps = {
   menuItems: dataMenuType[],
@@ -27,19 +28,20 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
 
   const _userEmail = useSelector(stateUser);
   const _userEmailProfile = useSelector(getUserProfile);
+  const _userPhoto = useSelector(stateEmailAndPasswordPhoto);
   const _userGoogleOrFacebook = useSelector(stateUserGoogleOrFacebook);
+  const _isSuccessUser = useSelector(isSuccessUser)
 
-
-  console.log(_userEmailProfile)
+console.log(_userPhoto.length)
   useEffect(() => {
     if (_userEmail.email.length !== 0) {
-      setUserPhoto(_userEmailProfile[0].photo);
+      setUserPhoto(_userPhoto.length !== 0 ? _userPhoto[0] : " ");
       setName(_userEmail.email);
     } else {
       setUserPhoto(_userGoogleOrFacebook.photo);
       setName(_userGoogleOrFacebook.userName);
     }
-   }, [_userEmailProfile, _userGoogleOrFacebook])
+   }, [_userEmailProfile, _userGoogleOrFacebook, _userPhoto[0]])
 
   const userEmail = {
     userID: '',
@@ -60,9 +62,12 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
     navigate('/');
     dispatch(isAuthenticated(false));
     window.localStorage.removeItem('userContactsApp');
-    dispatch(userOfLoggedEmailAndPassword(userEmail));
+    dispatch(userOfLoggedEmailAndPasswordPhoto(''));
+    dispatch(userOfLogged(userEmail))
+    dispatch(getUserData(userEmail));
     dispatch(userOfLoggedWithGoogleOrFacebook(userGoogleOrFacebook));
     dispatch(setLoginEmail(false));
+    dispatch(getContact([]));
   };
 
   const handleOpenProfile = () => {
@@ -103,7 +108,8 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
       boxShadow='sm'
      >
       <Box
-        width='80px'
+          width='80px'
+          objectFit='cover'
       >
         <Image
           width='100%'
@@ -126,20 +132,25 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
             borderColor='blue.500'
             marginRight='2rem'
             boxShadow='base'
-            onClick={handleOpenProfile}
+              onClick={handleOpenProfile}
+              objectFit='cover'
             >
-              {userPhoto
+              {userPhoto !==""
                 ? <Image
                   src={userPhoto}
                   alt={userName}
                   borderRadius='50%'
-                  width='60px'
+                  width='100%'
+                  height='100%'
+                  objectFit='cover'
                 />
                 : <Image
                   src={userP}
                   alt={userName}
                   borderRadius='50%'
                   width='60px'
+                  height='100%'
+                  objectFit='cover'
                 />
               }
           </Box>

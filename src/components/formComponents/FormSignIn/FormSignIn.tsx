@@ -6,12 +6,12 @@ import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { isAuthenticated, stateUser, userOfLogged, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateUser, userOfLogged, userOfLoggedEmailAndPasswordPhoto, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { auth, FacebookProvider, GoogleProvider } from '../../../firebase/config';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
 import axios from '../../../api/contactAuth';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
 import instance from '../../../api/contactAuth';
@@ -41,9 +41,18 @@ const FormSignIn = () => {
        for (const key in res.data) {
         usersTab.push({ ...res.data[key], id: key });
       };
-      let userTab: UserProfileInFirebase | any = [];
+       let userTab: UserProfileInFirebase | any = [];
       userTab.push(usersTab.filter(item => item.userID === _userID.userID))
-      dispatch(getUserData(usersTab));
+      dispatch(getUserData(userTab));
+      console.log(userTab[0])
+      userTab[0].forEach((item: any) => {
+        const photos = [
+          item.photo,
+        ]
+        console.log(photos)
+        dispatch(userOfLoggedEmailAndPasswordPhoto(photos));
+      });
+
       dispatch(setLoadingUser(false));
       dispatch(setSuccessUser(false));
     } catch (err) {
@@ -53,7 +62,7 @@ const FormSignIn = () => {
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [_userID.userID, ]);
 
   const validationSchema = () => yup.object().shape({
     userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(50, 'nazwa użytkownika nie może być dłuższa jak 50 znaków').email('Email zawiera błędy'),

@@ -17,12 +17,8 @@ export type LoginStateType = {
     email: string,
     photo: string,
   },
- userEmail: {
-    userName: string,
-    email: string,
-    photo: string,
-    userID: string,
-  }
+  photo: string,
+
 }
 
 const initialState: LoginStateType = {
@@ -40,12 +36,7 @@ const initialState: LoginStateType = {
     email: '',
     photo: '',
   },
-  userEmail: {
-    userName: '',
-    email: '',
-    photo: '',
-    userID: '',
-    }
+   photo: '',
   };
 
 const stateOfLoginSlice = createSlice({
@@ -61,15 +52,15 @@ const stateOfLoginSlice = createSlice({
     userOfLoggedWithGoogleOrFacebook: (state, action) => {
       state.userGoogleOrFacebook = action.payload;
     },
-     userOfLoggedEmailAndPassword: (state, action) => {
-      state.userEmail = action.payload;
+     userOfLoggedEmailAndPasswordPhoto: (state, action) => {
+      state.photo = action.payload;
     },
   }
 })
 
-export const { isAuthenticated, userOfLogged, userOfLoggedWithGoogleOrFacebook, userOfLoggedEmailAndPassword } = stateOfLoginSlice.actions;
+export const { isAuthenticated, userOfLogged, userOfLoggedWithGoogleOrFacebook, userOfLoggedEmailAndPasswordPhoto } = stateOfLoginSlice.actions;
 export const stateLogin = (state: RootState) => state;
 export const stateUser = (state: RootState) => state.stateOfLogin.user;
 export const stateUserGoogleOrFacebook = (state: RootState) => state.stateOfLogin.userGoogleOrFacebook;
-export const stateEmailAndPassword = (state: RootState) => state.stateOfLogin.userEmail;
+export const stateEmailAndPasswordPhoto = (state: RootState) => state.stateOfLogin.photo;
 export default stateOfLoginSlice.reducer;

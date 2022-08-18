@@ -5,7 +5,7 @@ import { AppDispatch } from '../../app/store';
 import { Loading } from '../../components';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import { isLoading } from '../../features/firebaseContacts/firebaseContactsSlice';
-import { stateUser, stateUserGoogleOrFacebook } from '../../features/stateOfLogin/stateOfLoginSlice';
+import { stateUser, stateUserGoogleOrFacebook, userOfLoggedEmailAndPasswordPhoto } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { getUserData, getUserProfile, isLoadingUser, isLoginEmail, isSuccessUser, setLoadingUser, setLoginEmail, setSuccessUser } from '../../features/userProfile/userProfileSlice';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
 import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
@@ -40,8 +40,15 @@ const ProfilePages = () => {
         usersTab.push({ ...res.data[key], id: key });
       };
       let userTab: UserProfileInFirebase | any = [];
-      userTab.push(usersTab.filter(item => item.userID === _userID.userID))
-      dispatch(getUserData(usersTab));
+      userTab.push(usersTab.filter((item: { userID: string; }) => item.userID === _userID.userID))
+      dispatch(getUserData(userTab));
+      userTab[0].forEach((item: any) => {
+        const photos = [
+          item.photo,
+        ]
+        console.log(photos)
+        dispatch(userOfLoggedEmailAndPasswordPhoto(photos));
+      });
       dispatch(setLoadingUser(false));
       dispatch(setSuccessUser(false));
     } catch (err) {
@@ -50,12 +57,14 @@ const ProfilePages = () => {
   };
 
   useEffect(() => {
-    fetchUserProfile();
+    if (_userProfil.length !== 0) {
+      fetchUserProfile();
+    }
   }, [_isSuccessUser]);
 
   useEffect(() => {
     if (_userProfil.length !== 0) {
-      setUser(_userProfil);
+      setUser(_userProfil[0]);
     }
   }, [_isSuccess]);
 
