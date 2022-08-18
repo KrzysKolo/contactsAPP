@@ -39,8 +39,6 @@ const LeftPanel = () => {
          title={"Dodaj nowy kontakt"}
          onOpen={onOpen}
          onClose={onClose}
-
-
       >
         <FormAddContact onClose={onClose} />
       </KModal>

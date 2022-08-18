@@ -6,20 +6,17 @@ import getSearchValueSliceReducer from '../features/getSearchValue/getSearchValu
 import addAddressesToStateReducer from '../features/addAddressesToState/addAddressesToStateSlice';
 import addSocialmediaToStateReducer from '../features/addSocialMediaToState/addSocialmediaToStateSlice';
 import firebaseContactsReducer from '../features/firebaseContacts/firebaseContactsSlice';
-//import toastReducer from '../features/toast/toastSlice';
-
+import userProfileReducer from '../features/userProfile/userProfileSlice';
 
 export const store = configureStore({
   reducer: {
     firebaseContacts: firebaseContactsReducer,
-
-    //getContacts: getContactsReducer,
+    userProfile: userProfileReducer,
     stateOfLogin: stateOfLoginReducer,
     stateOfContactCard: stateOfContactCardReducer,
     getSearchValue: getSearchValueSliceReducer,
     addAddressesToState: addAddressesToStateReducer,
     addSocialmediaToState: addSocialmediaToStateReducer,
-    //toast: toastReducer,
   },
 });
 

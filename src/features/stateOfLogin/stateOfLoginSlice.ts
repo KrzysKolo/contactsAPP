@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Settings } from 'http2';
 import { RootState, } from '../../app/store';
 
 export type LoginStateType = {
@@ -7,17 +8,20 @@ export type LoginStateType = {
     userID: string,
     email: string,
     password: string,
+    photo: string,
     token: string,
   },
-  userGoogle: {
+  userGoogleOrFacebook: {
+    userID: string,
     userName: string,
     email: string,
     photo: string,
   },
-  userFacebook: {
+ userEmail: {
     userName: string,
     email: string,
     photo: string,
+    userID: string,
   }
 }
 
@@ -27,18 +31,21 @@ const initialState: LoginStateType = {
     userID: '',
     email: '',
     password: '',
-    token: ''
-  },
-  userGoogle: {
+    photo: '',
+    token: '',
+   },
+  userGoogleOrFacebook: {
+    userID: '',
     userName: '',
     email: '',
     photo: '',
   },
-  userFacebook: {
+  userEmail: {
     userName: '',
     email: '',
     photo: '',
-  }
+    userID: '',
+    }
   };
 
 const stateOfLoginSlice = createSlice({
@@ -51,18 +58,18 @@ const stateOfLoginSlice = createSlice({
     userOfLogged: (state, action) => {
       state.user = action.payload;
     },
-    userOfLoggedWithGoogle: (state, action) => {
-      state.userGoogle = action.payload;
+    userOfLoggedWithGoogleOrFacebook: (state, action) => {
+      state.userGoogleOrFacebook = action.payload;
     },
-    userOfLoggedWithFacebook: (state, action) => {
-      state.userFacebook = action.payload;
+     userOfLoggedEmailAndPassword: (state, action) => {
+      state.userEmail = action.payload;
     },
   }
 })
 
-export const { isAuthenticated, userOfLogged, userOfLoggedWithGoogle, userOfLoggedWithFacebook } = stateOfLoginSlice.actions;
+export const { isAuthenticated, userOfLogged, userOfLoggedWithGoogleOrFacebook, userOfLoggedEmailAndPassword } = stateOfLoginSlice.actions;
 export const stateLogin = (state: RootState) => state;
 export const stateUser = (state: RootState) => state.stateOfLogin.user;
-export const stateUserGoogle = (state: RootState) => state.stateOfLogin.userGoogle;
-export const stateUserFacebook = (state: RootState) => state.stateOfLogin.userFacebook;
+export const stateUserGoogleOrFacebook = (state: RootState) => state.stateOfLogin.userGoogleOrFacebook;
+export const stateEmailAndPassword = (state: RootState) => state.stateOfLogin.userEmail;
 export default stateOfLoginSlice.reducer;

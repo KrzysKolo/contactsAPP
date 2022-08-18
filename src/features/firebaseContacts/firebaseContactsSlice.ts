@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { ContactInFirebase } from "../../models/InterfaceContactsInFirebase";
 
-
-
 export type ContactsTabType = {
   contactsTab: ContactInFirebase[],
   isLoading: boolean,

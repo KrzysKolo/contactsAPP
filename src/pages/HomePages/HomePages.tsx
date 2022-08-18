@@ -36,8 +36,8 @@ const HomePages = () => {
     fetchContacts();
   }, [_isSuccess]);
 
+  useWebsiteTitle('Kontakty');
 
-  useWebsiteTitle('Kontakty')
   return (
     <main>
       <HStack

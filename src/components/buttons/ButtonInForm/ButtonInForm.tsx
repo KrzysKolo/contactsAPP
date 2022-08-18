@@ -16,7 +16,7 @@ const ButtonInForm = ({ title, onSubmit, onReset, variant}: ButtonInFormProps) =
       boxShadow='xs'
       borderRadius='12px'
       color="white"
-      //colorScheme="secondary"
+      colorScheme="secondary"
       fontFamily="Orbitron"
       fontSize="14px"
       lineHeight='16px'

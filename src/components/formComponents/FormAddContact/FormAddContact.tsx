@@ -1,6 +1,6 @@
 
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, VStack } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, useToast, VStack } from '@chakra-ui/react';
 import InputAddContact from '../../inputs/InputAddContact/InputAddContact';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
 import { TbWorld } from 'react-icons/tb'
@@ -18,8 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { addContactToFirebase, isSuccess, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
-//import { addToast, getStateToast } from '../../../features/toast/toastSlice';
-//import { useToastHook } from '../../../hooks/useToastHook/useToastHook';
+
 
 
 export type FormAddContactProps = {
@@ -27,9 +26,6 @@ export type FormAddContactProps = {
 }
 
 const FormAddContact = ({ onClose }: FormAddContactProps) => {
-  //const _toast = useSelector(getStateToast);
-  const _isSuccess = useSelector(isSuccess);
-  console.log(_isSuccess)
 
   // DANE KONTAKTU
   const [name] = useState<string>("");
@@ -60,18 +56,17 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   const [imageName, setImageName] = useState<string>("")
   //const [state, newToast] = useToastHook();
 
+  const onFileChange = (e: any) => {
+    const image = e.target.files[0];
+    if (image) {
+      setFile(image);
+      setErrorFile('')
+    } else {
+      setFile([]);
+      setErrorFile('Wybierz plik .jpg lub .png');
+    }
+  };
 
-
-   const onFileChange = (e: any) => {
-      const image = e.target.files[0];
-      if (image )  {
-       setFile(image);
-       setErrorFile('')
-     } else {
-       setFile([]);
-       setErrorFile('Wybierz plik .jpg lub .png');
-     }
-   }
    useEffect(() => {
      onHandleAdd();
    }, [file]);
@@ -204,15 +199,11 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
     try {
       const res: ContactInFirebase = await contactApi.post(`/contacts.json`, contactData);
       dispatch(addContactToFirebase(res));
-      //dispatch(setSuccess(true));
-      //dispatch(addToast({ title: "Dodano dane do bazy", status: "success" }));
-      //dispatch(setSuccess(false));
     }
     catch (error) {
       console.log(error)
     }
-  }
-
+  };
 
   const addContact = () => {
 

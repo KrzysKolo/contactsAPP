@@ -10,9 +10,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase/config';
 import { useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
-import axios from 'axios';
 import instance from '../../../api/contactAuth';
 import TextLink from '../TextLink/TextLink';
+import axiosClient from '../../../api/contactApi';
 
 
 const FormRegister = () => {
@@ -40,11 +40,12 @@ const FormRegister = () => {
       } else {
         try {
           const res = await instance.post('accounts:signUp', {
+            loginEmail: false,
             email: formik.values.userName,
             password: formik.values.password,
             returnSecureToken: true,
           })
-          console.log(res)
+          const res2 = await axiosClient.post('/users.json', { userName: '', email: formik.values.userName, photo: '', userID: res.data.localId, loginEmail: true });
           dispatch(isAuthenticated(false));
           navigate('/signin');
           actions.resetForm();

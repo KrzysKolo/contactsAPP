@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addSocialMediaUrlContact, SocialMediaUrl, stateContactSocialMedia } from '../../../features/addSocialMediaToState/addSocialmediaToStateSlice';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri';
 import { setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+
 export type FormEditContactProps = {
-  //contact: ContactInFirebase[];
   handleEditContact: (
     name?: string | any,
     description?: string |any,
@@ -23,30 +23,6 @@ export type FormEditContactProps = {
     socialMedia?: SocialMediaUrl[] |any,
     image?: { name: any, url: any,
   })  => void;
-   /*  name: string,
-    description: string,
-    typeContact: string,
-    addresses: {
-      city: string,
-      street: string,
-      code: string,
-      country:string,
-      email: string,
-      phone: string,
-    },
-    socialMedia: {
-      facebook: string,
-      linkedin: string,
-      instagram: string,
-      github: string,
-      youtube: string,
-      web: string,
-    },
-  image: {
-    name: string,
-    url: string,
-  }, id: string, ) => Promise<void | any>; */
-  //handleEditContact: () => void;
   onClose: () => void;
   onOpen?: () => void;
   contact: ContactInFirebase | any,
@@ -221,8 +197,7 @@ const FormEditContact: React.FC<FormEditContactProps> = ({ handleEditContact, on
     web: formikSM.values.web,}, image })
     dispatch(setSuccess(true));
     dispatch(setLoading(true));
-
-      onClose();
+     onClose();
   };
 
   const closeFormEditContact = () => {

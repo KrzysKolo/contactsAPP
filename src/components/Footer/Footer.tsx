@@ -1,20 +1,19 @@
-import { Box, Flex, Image, Link, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Image, Link, HStack } from '@chakra-ui/react';
 import logoKK from '../../assets/image/logo.png';
-import React from 'react';
 import { MdOutlinePhonelinkRing, MdLocationOn } from "react-icons/md";
 import { ImEnvelop } from "react-icons/im";
 import { AiOutlineCopyright } from "react-icons/ai";
+import FooterText from '../footerComponents/FooterText/FooterText';
 
 const Footer = () => {
   return (
     <div>
-       <Flex
-      //border='2px solid red'
-      width="100vw"
-      flexDirection='column'
-      alignItems='center'
-      justifyContent='center'
-    >
+      <Flex
+        width="100vw"
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+      >
       <Flex
         flexDirection='row'
         alignItems='center'
@@ -31,40 +30,17 @@ const Footer = () => {
           >
             <HStack
               color="blue.500"
-              fontSize='16px'
+              fontSize='14px'
             >
               <MdOutlinePhonelinkRing />
-              <Text
-                textAlign='left'
-                fontFamily='Orbitron'
-                fontSize='14px'
-                fontWeight='normal'
-                lineHeight='16px'
-                letterSpacing='2px'
-                color="blue.500"
-                align='center'
-                marginTop='10px'
-                marginBottom='10px'
-                width='100%'
-              >+48 501-770-693</Text>
+              <FooterText text=" +48 501-770-693" />
             </HStack>
             <HStack
               color="blue.500"
-              fontSize='16px'
+              fontSize='14px'
             >
               <ImEnvelop />
-              <Text
-                fontFamily='Orbitron'
-                fontSize='14px'
-                fontWeight='normal'
-                lineHeight='28px'
-                letterSpacing='2px'
-                color="blue.500"
-                align='center'
-                marginTop='10px'
-                marginBottom='10px'
-                width='100%'
-              >kontakt@krzysztofa-kolodziejczak.pl</Text>
+              <FooterText text='kontakt@krzysztofa-kolodziejczak.pl' />
             </HStack>
           </Flex>
           <HStack
@@ -72,18 +48,7 @@ const Footer = () => {
                fontSize='20px'
           >
             <MdLocationOn />
-            <Text
-              fontFamily='Orbitron'
-              fontSize='14px'
-              fontWeight='normal'
-              lineHeight='28px'
-              letterSpacing='2px'
-              color="blue.500"
-              align='center'
-              marginTop='10px'
-              marginBottom='10px'
-              width='100%'
-            >Piła</Text>
+            <FooterText text='Piła' />
           </HStack>
         </Flex>
         <Flex
@@ -92,18 +57,7 @@ const Footer = () => {
           alignItems='center'
         >
           <AiOutlineCopyright />
-          <Text
-            fontFamily='Orbitron'
-            fontSize='14px'
-            fontWeight='normal'
-            lineHeight='28px'
-            letterSpacing='2px'
-            color="blue.500"
-            align='center'
-            marginTop='10px'
-            marginBottom='10px'
-            width='100%'
-          >2022</Text>
+          <FooterText text='2022' />
         </Flex>
       </Flex>
     </div>

@@ -42,9 +42,7 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick, onOpen }) => {
 
   return (
     <>
-
-
-    <Stack
+   <Stack
       background={contact.typeContact === "1" ? "blue.500" : "green.500"}
       borderRadius='12px'
       marginBottom='10px'
@@ -209,7 +207,6 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick, onOpen }) => {
             fontSize='20px'
             cursor='pointer'
             _hover={{ transform: 'scale(1.2)', color: 'orange.300' }}
-            //onClick={handleEditContact}
             onClick={onOpen}
           >
             <FaRegEdit />

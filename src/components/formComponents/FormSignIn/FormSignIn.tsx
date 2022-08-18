@@ -4,9 +4,9 @@ import logo from '../../../assets/image/Contact-AppLogo2.png';
 import { LoginButton } from '../../buttons';
 import { InputSign } from '../../inputs';
 import Line from '../Line/Line';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../app/store';
-import { isAuthenticated, userOfLogged, userOfLoggedWithFacebook, userOfLoggedWithGoogle } from '../../../features/stateOfLogin/stateOfLoginSlice';
+import { isAuthenticated, stateUser, userOfLogged, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -18,6 +18,10 @@ import instance from '../../../api/contactAuth';
 import { resourceLimits } from 'worker_threads';
 import ForgetPassword from '../../ForgetPassword/ForgetPassword';
 import TextLink from '../TextLink/TextLink';
+import { userProfile } from '../../../services/userProfil/userProfil';
+import { getUserData, getUserProfile, isSuccessUser, setLoadingUser, setLoginEmail, setSuccessUser } from '../../../features/userProfile/userProfileSlice';
+import { UserProfileInFirebase } from '../../../models/InterfaceUserProfile';
+import { isSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 
 
 const FormSignIn = () => {
@@ -25,6 +29,31 @@ const FormSignIn = () => {
   const [valuePassword] = useState<string>('');
   const [userNameInStorage, setUserNameInStorage] = useStateStorage("", "")
 
+  const _userID = useSelector(stateUser);
+  const _isSuccessUser = useSelector(isSuccessUser)
+  const _isSuccess = useSelector(isSuccess);
+
+  let usersTab: UserProfileInFirebase[] = [];
+
+  const fetchUserProfile = async () => {
+    try {
+      const res = await userProfile();
+       for (const key in res.data) {
+        usersTab.push({ ...res.data[key], id: key });
+      };
+      let userTab: UserProfileInFirebase | any = [];
+      userTab.push(usersTab.filter(item => item.userID === _userID.userID))
+      dispatch(getUserData(usersTab));
+      dispatch(setLoadingUser(false));
+      dispatch(setSuccessUser(false));
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
 
   const validationSchema = () => yup.object().shape({
     userName: yup.string().required('Nazwa użytkownika jest obowiązkowa').min(6, 'Nazwa użytkownika musi imieć conajmniej 6 znaków').max(50, 'nazwa użytkownika nie może być dłuższa jak 50 znaków').email('Email zawiera błędy'),
@@ -45,6 +74,7 @@ const FormSignIn = () => {
           returnSecureToken: true,
         });
         dispatch(isAuthenticated(true));
+        dispatch(setLoginEmail(true));
         dispatch(userOfLogged({
           userID: res.data.localId,
           email: formik.values.userName,
@@ -69,13 +99,15 @@ const FormSignIn = () => {
     signInWithPopup(auth, GoogleProvider)
       .then((result) => {
         console.log(result)
-        const userGoogleData = {
+        const userDataGoogleOrFacebook = {
+          userID: result.user.uid,
           userName: result.user.displayName,
           email: result.user.email,
           photo: result.user.photoURL,
         }
-        dispatch(userOfLoggedWithGoogle(userGoogleData));
+        dispatch(userOfLoggedWithGoogleOrFacebook(userDataGoogleOrFacebook));
         dispatch(isAuthenticated(true));
+        dispatch(setLoginEmail(false));
         window.localStorage.setItem('userContactsApp', `${result.user.displayName}`);
         navigate('/home');
       })
@@ -87,13 +119,15 @@ const FormSignIn = () => {
     signInWithPopup(auth, FacebookProvider)
       .then((result) => {
         console.log(result)
-        const userFacebookData = {
+        const userDataGoogleOrFacebook = {
+          userID: result.user.uid,
           userName: result.user.displayName,
           email: result.user.email,
           photo: result.user.photoURL,
         }
-        dispatch(userOfLoggedWithFacebook(userFacebookData));
+        dispatch(userOfLoggedWithGoogleOrFacebook(userDataGoogleOrFacebook));
         dispatch(isAuthenticated(true));
+        dispatch(setLoginEmail(false));
         window.localStorage.setItem('userContactsApp', `${result.user.displayName}`);
         navigate('/home');
       })
