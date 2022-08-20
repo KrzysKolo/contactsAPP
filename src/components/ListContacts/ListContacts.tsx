@@ -1,5 +1,6 @@
-import { Box, useDisclosure,  } from '@chakra-ui/react';
+import { Box, Flex, useDisclosure,  } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
+import ReactPaginate from 'react-paginate';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { getAllContacts, isLoading } from '../../features/firebaseContacts/firebaseContactsSlice';
@@ -9,6 +10,7 @@ import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 import { ContactCard } from '../contactBoxComponents/';
 import FormEditContact from '../formComponents/FormEditContact/FormEditContact';
 import KModal from '../KModal/KModal';
+import { BiSkipNextCircle } from 'react-icons/bi'
 
 
 const ListContacts: React.FC = () => {
@@ -27,6 +29,7 @@ const ListContacts: React.FC = () => {
   const [contactsTabUser, setContactsTabUser] = useState<ContactInFirebase[] | any>([])
   const [contactsToList, setContactsToList] = useState<ContactInFirebase[] | any>([]);
   const _searchValue = useSelector(searchValue);
+
 
   useEffect(() => {
       setContactsTabUser(_contactsTab.filter((item: { userID: string | any; }) => item.userID === _user.userID));
@@ -50,13 +53,46 @@ const ListContacts: React.FC = () => {
     }
   }, [_searchValue, contactsTabUser]);
 
+    //PAGINATE
+
+    const numberOfContacts = contactsToList.length;
+    const [pageNumber, setPageNumber] = useState(0);
+    const contactsPerPage = 10;
+    const pagesVisited = pageNumber * contactsPerPage;
+    const displayContacts = contactsToList.slice(pagesVisited, pagesVisited + contactsPerPage)
+    .map((item: ContactInFirebase) => <ContactCard key={item.id} contact={item} />);
+    const pageCount = Math.ceil(numberOfContacts / contactsPerPage);
+
+    const changePage = ({ selected }: any) => {
+      setPageNumber(selected);
+    };
+
+
   return (
     <>
+      <Flex
+        flexDirection='column'
+      >
       <Box
         paddingTop='2rem'
       >
-        {contactsToList.map((item: ContactInFirebase) => <ContactCard key={item.id} contact={item}/>) }
-      </Box>
+        {displayContacts}
+        </Box>
+        <Flex>
+      <ReactPaginate
+        previousLabel={"<<"}
+        nextLabel={">>"}
+        pageCount={pageCount}
+        onPageChange={changePage}
+        containerClassName={"paginationBttns"}
+        previousLinkClassName={"previousBttn"}
+        nextLinkClassName={"nextBttn"}
+        disabledClassName={"paginationDisabled"}
+        activeClassName={"paginationActive"}
+
+          />
+          </Flex>
+        </Flex>
     </>
   )
 }

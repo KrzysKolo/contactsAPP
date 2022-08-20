@@ -14,7 +14,7 @@ const RightPanel = () => {
     setValue(e.target.value);
     dispatch(getSearchValue(e.target.value.toLowerCase()));
   };
-  console.log(value)
+
   return (
     <Flex
       flexDirection='column'

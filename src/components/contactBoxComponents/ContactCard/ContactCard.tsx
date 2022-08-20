@@ -8,6 +8,7 @@ import FormEditContact from '../../formComponents/FormEditContact/FormEditContac
 import KModal from '../../KModal/KModal';
 import ContactBox from '../ContactBox/ContactBox';
 import ContactNameBox from '../ContactNameBox/ContactNameBox';
+import ReactPaginate from 'react-paginate';
 
 export type ContactCardProps = {
   contact: ContactInFirebase | any,
@@ -17,6 +18,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
 
   const [isVisibleCard, setIsVisibleCard] = useState<boolean>(false);
   const dispatch = useDispatch();
+
 
   const handleChangeStateVisibleCard = (e: string) => {
     setIsVisibleCard(!isVisibleCard);
@@ -52,15 +54,14 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
           onClose={onCloseEdit}
           handleEditContact={handleEditContact} />
       </KModal>
-
-    <section>
-      {isVisibleCard
-          ? (<ContactBox contact={contact} onClick={() => handleChangeStateVisibleCard(`${contact.id}`)}  onOpen={onOpenEdit} /> )
-        : (<ContactNameBox contact={contact} onClick={() => handleChangeStateVisibleCard(`${contact.id}`)} />)
-      }
-
+      <section>
+        {
+          isVisibleCard
+            ? (<ContactBox contact={contact} onClick={() => handleChangeStateVisibleCard(`${contact.id}`)} onOpen={onOpenEdit} />)
+            : (<ContactNameBox contact={contact} onClick={() => handleChangeStateVisibleCard(`${contact.id}`)} />)
+        }
       </section>
-      </>
+    </>
   )
 }
 
