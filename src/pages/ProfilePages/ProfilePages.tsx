@@ -33,22 +33,28 @@ const ProfilePages = () => {
   let usersTab: UserProfileInFirebase[] = [];
 
   const fetchUserProfile = async () => {
+
     try {
       const res = await userProfile();
       console.log(res)
        for (const key in res.data) {
-        usersTab.push({ ...res.data[key], id: key });
+         usersTab.push({ ...res.data[key], id: key });
       };
       let userTab: UserProfileInFirebase | any = [];
-      userTab.push(usersTab.filter((item: { userID: string; }) => item.userID === _userID.userID))
+      userTab.push(usersTab.filter((item: { userID: string; }) => item.userID === _userID.userID));
+      console.log(userTab[0].length)
+      if (userTab[0].length > 1) {
+        dispatch(getUserData(userTab[0].splice(0, 1)));
+      }
       dispatch(getUserData(userTab));
+
       userTab[0].forEach((item: any) => {
         const photos = [
           item.photo,
         ]
-        console.log(photos)
         dispatch(userOfLoggedEmailAndPasswordPhoto(photos));
       });
+
       dispatch(setLoadingUser(false));
       dispatch(setSuccessUser(false));
     } catch (err) {
@@ -60,12 +66,14 @@ const ProfilePages = () => {
     if (_userProfil.length !== 0) {
       fetchUserProfile();
     }
+    else if (_userProfil.length > 1) {
+      dispatch(getUserData(_userProfil.splice(0,1)))
+    }
   }, [_isSuccessUser]);
 
   useEffect(() => {
-    if (_userProfil.length !== 0) {
       setUser(_userProfil[0]);
-    }
+
   }, [_isSuccess]);
 
   useEffect(() => {
@@ -75,7 +83,7 @@ const ProfilePages = () => {
    }, [_isSuccess, _userProfilGoogleOrFacebook.userID]);
 
   useWebsiteTitle('Twój profil');
-console.log(user)
+
   return (
     <VStack
       height='70vh'

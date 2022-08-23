@@ -32,7 +32,6 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const _userGoogleOrFacebook = useSelector(stateUserGoogleOrFacebook);
   const _isSuccessUser = useSelector(isSuccessUser)
 
-console.log(_userPhoto.length)
   useEffect(() => {
     if (_userEmail.email.length !== 0) {
       setUserPhoto(_userPhoto.length !== 0 ? _userPhoto[0] : " ");

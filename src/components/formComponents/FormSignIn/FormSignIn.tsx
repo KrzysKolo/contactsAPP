@@ -44,13 +44,11 @@ const FormSignIn = () => {
        let userTab: UserProfileInFirebase | any = [];
       userTab.push(usersTab.filter(item => item.userID === _userID.userID))
       dispatch(getUserData(userTab));
-      console.log(userTab[0])
       userTab[0].forEach((item: any) => {
         const photos = [
           item.photo,
         ]
-        console.log(photos)
-        dispatch(userOfLoggedEmailAndPasswordPhoto(photos));
+         dispatch(userOfLoggedEmailAndPasswordPhoto(photos));
       });
 
       dispatch(setLoadingUser(false));
@@ -107,7 +105,6 @@ const FormSignIn = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, GoogleProvider)
       .then((result) => {
-        console.log(result)
         const userDataGoogleOrFacebook = {
           userID: result.user.uid,
           userName: result.user.displayName,
@@ -127,7 +124,6 @@ const FormSignIn = () => {
   const signInWithFacebook = () => {
     signInWithPopup(auth, FacebookProvider)
       .then((result) => {
-        console.log(result)
         const userDataGoogleOrFacebook = {
           userID: result.user.uid,
           userName: result.user.displayName,

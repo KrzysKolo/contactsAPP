@@ -24,7 +24,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
 
   //EDYTOWANIE KONTAKTU
   const handleEditProfile = async({ userName, photo }: any ) => {
-    console.log({ userName, photo })
+
     try {
     const data = await contactApi.patch(`/users/${item.id}.json`,
       {userName, photo  }
@@ -40,7 +40,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
     <>
          <KModal
          isOpen={isOpen}
-         title={"Dodaj nowy kontakt"}
+         title={"Edtruj profil"}
          onOpen={onOpen}
          onClose={onClose}
       >
@@ -67,8 +67,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
       </Box>
       <Box>
         <TextInProfile title='Twój NICK: ' text={item.userName} />
-        <TextInProfile title='Email:' text={item.email} />
-        <TextInProfile title='Twoje ID:' text={item.userID} />
+        <TextInProfile title='Email: ' text={item.email} />
+        <TextInProfile title='Twoje ID: ' text={item.userID} />
         <Box
             marginTop='3rem'
         >{loginEmail &&

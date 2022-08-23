@@ -31,7 +31,7 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
 
 //EDYTOWANIE KONTAKTU
   const handleEditContact = async({ name, description, typeContact, addresses, socialMedia, image }: any ) => {
-    console.log({ name, description, typeContact, addresses, socialMedia, image })
+
     try {
     const data = await contactApi.patch(`/contacts/${contact.id}.json`,
       {name, description, typeContact, addresses, socialMedia, image  }
