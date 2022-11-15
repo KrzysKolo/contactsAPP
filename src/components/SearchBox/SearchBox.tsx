@@ -11,9 +11,9 @@ export type SearchBoxProps = {
 const SearchBox:React.FC<SearchBoxProps> = ({ placeholder, onChange, value }) => {
   return (
     <Flex
-      minW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
-      justifyContent='center'
       alignItems='center'
+      justifyContent='center'
+      minW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
     >
       <InputGroup
         color='orange.300'

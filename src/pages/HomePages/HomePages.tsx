@@ -42,6 +42,7 @@ const HomePages = () => {
       <HStack
         alignItems='flex-start'
         justifyContent='center'
+        margin={{ base: '65px auto', lg: '0 auto' }}
         minHeight='80vh'
         padding='2rem'
         width={{ base: '100%', sm: '90%', md: '90%', lg: '1200px' }}
@@ -50,7 +51,7 @@ const HomePages = () => {
           templateColumns={{ base: '100%', lg: 'repeat(2, 1fr)' }}
           alignSelf='self-start'
           justifySelf='center'
-          gap={{ base: '2' }}
+          gap={{ base: '0.25rem', md: '2rem'}}
         >
         {_isLoading
           ? (
@@ -61,13 +62,13 @@ const HomePages = () => {
           : (
               <>
                 <GridItem
-                  margin={{ base: '65px auto', lg: '0 auto' }}
+                  margin={{ base: '5px auto', lg: '0 auto' }}
                   width={{ base: '100%', sm: '90%', md: '60%', lg: '100%' }}
                 >
                   <LeftPanel />
                 </GridItem>
                 <GridItem
-                  width={{ base: '65px auto', lg: '0 auto' }}
+                  width={{ base: '5px auto', lg: '0 auto' }}
                   margin={{ base: '0 auto' }}
                 >
                   <RightPanel />

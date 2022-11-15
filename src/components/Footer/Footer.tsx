@@ -16,15 +16,14 @@ const Footer = () => {
         minWidth={{base: "100vw", lg: '1000px', xl: '1200px'}}
       >
       <Flex
-        alignItems='center'
-        flexDirection='row'
+        alignItems='flex-start'
+        flexDirection='column'
         justifyContent='space-between'
         minWidth={{ lg: '990px', xl: '1200px' }}
-      >
+        padding='0 10px 0 20px'
+        width='100vw'
+        >
           <Box width='50px'>
-
-
-            sasasasasa
             <Link href='http://krzysztofa-kolodziejczak.pl/' target='_blank' >
               <Image src={logoKK} alt='Logo autora aplikacji' />
             </Link>

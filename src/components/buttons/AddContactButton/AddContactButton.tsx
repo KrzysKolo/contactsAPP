@@ -20,14 +20,14 @@ const AddContactButton:React.FC<AddContactButtonProps> = ({ text, onClick }) => 
       letterSpacing='2px'
       marginTop='2.5rem'
       onClick={onClick}
-      padding='24px 53px'
+      padding={{ base: '4px 53px', sm: '24px 53px' }}
       transitionDuration='500ms'
-      width={{ base: '90vw', sm: '470px', md: '470px', lg: '400px' }}
+      minW={{ base: '90vw', sm: '470px', md: '470px', lg: '470px' }}
       _hover={{ backgroundColor: 'orange.200', color: "blue.500" }}
       _active={{ backgroundColor: 'orange.300'}}
     >
       <Box
-        marginRight='36px'
+        marginRight={{ base: '5px', sm: '5px', md: '36px', lg: '36px' }}
       >
         {text}
       </Box>
