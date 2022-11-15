@@ -26,7 +26,6 @@ const HomePages = () => {
       dispatch(getContact(contactsTab));
       dispatch(setLoading(false));
       dispatch(setSuccess(false));
-
     } catch (err) {
       console.log(err)
     }
@@ -46,8 +45,7 @@ const HomePages = () => {
         minHeight='80vh'
         padding='2rem'
         width={{ base: '100%', sm: '90%', md: '90%', lg: '1200px' }}
-        marginTop={{ base: '66px', sm: '65px', md: '20px', lg: '20px' }}
-      >
+       >
         <Grid
           templateColumns={{ base: '100%', lg: 'repeat(2, 1fr)' }}
           alignSelf='self-start'
@@ -63,13 +61,13 @@ const HomePages = () => {
           : (
               <>
                 <GridItem
-                  margin={{ base: '0 auto' }}
+                  margin={{ base: '65px auto', lg: '0 auto' }}
                   width={{ base: '100%', sm: '90%', md: '60%', lg: '100%' }}
                 >
                   <LeftPanel />
                 </GridItem>
                 <GridItem
-                  width={{ base: '100%' }}
+                  width={{ base: '65px auto', lg: '0 auto' }}
                   margin={{ base: '0 auto' }}
                 >
                   <RightPanel />

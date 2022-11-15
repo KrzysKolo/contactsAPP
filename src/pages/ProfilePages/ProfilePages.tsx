@@ -93,9 +93,7 @@ const ProfilePages = () => {
         {_isLoading
           ? ( <Loading />)
           : (
-
               <UserProfile user={user} loginEmail={_isLoginEmail} />
-
             )
         }
       </Grid>

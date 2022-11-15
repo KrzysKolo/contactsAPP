@@ -19,6 +19,7 @@ const RightPanel = () => {
     <Flex
       alignItems='center'
       flexDirection='column'
+      marginTop={{ base: '65px', lg: '20px' }}
     >
       <SearchBox placeholder='Search...' value={value} onChange={handleChangeValue} />
       <ListContacts />

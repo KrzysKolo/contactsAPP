@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Image, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Image, Button, InputGroup, InputLeftElement, Input, Icon } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { dataMenuType } from '../../../assets/data/dataMenu';
@@ -8,6 +8,7 @@ import { getUserData, setLoginEmail } from '../../../features/userProfile/userPr
 import BurgerIcon from '../BurgerIcon/BurgerIcon';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import { useDispatch } from 'react-redux';
+import { RiLogoutCircleLine } from "react-icons/ri";
 
 export type DivMenuProps = {
   menuItems: dataMenuType[],
@@ -120,15 +121,26 @@ const DivMenuMobile: React.FC<DivMenuProps> = ({ menuItems }) => {
               </Box>)
           }
           <Link to='/'>
-            <Button
+            <Flex
+              alignItems='center'
               color='blue.500'
               fontFamily='Orbitron'
               letterSpacing='2px'
-              onClick={handleChangeStateLogin}
-              padding='10px'
+              margin='1.75rem 0'
             >
-              Wyloguj się
-            </Button>
+              <Box
+                fontSize='18px'
+                margin='10px'
+                pointerEvents='none'
+              >
+                  <RiLogoutCircleLine color='gray.300' />
+              </Box>
+              <Box
+                fontSize='18px'
+              >
+                Wyloguj się
+              </Box>
+            </Flex>
           </Link>
         </Flex>
       </Flex>

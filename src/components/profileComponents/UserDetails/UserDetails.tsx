@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Image, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Image, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import contactApi from '../../../api/contactApi';
@@ -45,7 +45,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
       >
         <FormEditProfile onClose={onClose} item={item} handleEditProfile={handleEditProfile} />
       </KModal>
-      <Grid templateColumns={{base: '100%', lg: 'repeat(3, 1fr)' }} gap={{ base: '2' }}>
+      <Grid
+        gap={{ base: '2' }}
+        paddingLeft={{ base: '10px', md: '50px' }}
+        templateColumns={{ base: '100%', lg: 'repeat(3, 1fr)' }}
+      >
         <GridItem>
           <Box
             alignItems='center'
@@ -56,7 +60,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
             display='flex'
             justifyContent='center'
             marginLeft='4rem'
-            marginRight='4rem'
+            marginRight={{ base: '1rem', md: '4rem' }}
+            marginTop={{ base: '65px', lg: '0' }}
             width={{base: '120px', lg:'200px'}}
           >
             {item.photo !== ""
@@ -80,12 +85,14 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
             <TextInProfile title='Twój NICK: ' text={item.userName} />
             <TextInProfile title='Email: ' text={item.email} />
             <TextInProfile title='Twoje ID: ' text={item.userID} />
-            <Box
+            <Flex
               marginTop='3rem'
+              justifyContent={{base: 'center', md: 'flex-start'}}
+              alignItems={{base: 'center', md: 'flex-start'}}
             >{loginEmail &&
               <ButtonInForm variant="submit" title="Edytuj profil" onSubmit={onOpen}  />
               }
-            </Box>
+            </Flex>
           </Box>
         </GridItem>
       </Grid>

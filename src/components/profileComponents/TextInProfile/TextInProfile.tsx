@@ -8,7 +8,11 @@ export type TextInProfileProps = {
 
 const TextInProfile: React.FC<TextInProfileProps> = ({ title, text }) => {
   return (
-    <Flex>
+    <Flex
+      flexDirection={{base: 'column', sm: 'row'}}
+      justifyContent='flex-start'
+      alignItems='flex-start'
+    >
       <Text
        align='center'
        color="blue.500"
