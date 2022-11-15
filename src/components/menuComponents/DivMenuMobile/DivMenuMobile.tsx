@@ -43,6 +43,7 @@ const DivMenuMobile: React.FC<DivMenuProps> = ({ menuItems }) => {
     dispatch(userOfLoggedWithGoogleOrFacebook(userGoogleOrFacebook));
     dispatch(setLoginEmail(false));
     dispatch(getContact([]));
+    setOpen(!open)
   };
 
   const [open, setOpen] = useState<boolean>(false)
@@ -127,6 +128,7 @@ const DivMenuMobile: React.FC<DivMenuProps> = ({ menuItems }) => {
               fontFamily='Orbitron'
               letterSpacing='2px'
               margin='1.75rem 0'
+              onClick={handleChangeStateLogin}
             >
               <Box
                 fontSize='18px'
