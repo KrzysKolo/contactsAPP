@@ -11,26 +11,30 @@ export type ContactNameBoxProps = {
 const ContactNameBox:React.FC<ContactNameBoxProps> = ({ contact, onClick }) => {
   return (
     <Box
-      width='475px'
       onClick={onClick}
+      minW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
     >
       <HStack
         background={contact.typeContact === "1" ? "blue.500" : "green.500"}
-        padding='15px'
         borderRadius='12px'
-        marginBottom='8px'
-        cursor='pointer'
         boxShadow='md'
+        cursor='pointer'
+        marginBottom='8px'
+        padding='15px'
+        width={{ base: '90vw', sm: '470px', md: '470px', lg: '470px' }}
       >
         <Text
           color="white"
-          letterSpacing='2px'
           fontFamily="Orbitron"
-          w="100%"
           fontSize="14px"
-          lineHeight='14px'
           fontWeight="medium"
+          letterSpacing='2px'
+          lineHeight='14px'
           marginRight='1.5rem'
+          width="100%"
         >
           {contact.name}
         </Text>

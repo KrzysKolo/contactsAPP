@@ -47,8 +47,8 @@ const customTheme = extendTheme({
     lg: '28px'
   },
   breakpoints: {
-    sm: '30em',
-    md: '48em',
+    sm: '350px',
+    md: '768px',
     lg: '62em',
     xl: '80em',
     '2xl': '96em',

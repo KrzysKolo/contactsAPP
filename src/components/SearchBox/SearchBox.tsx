@@ -10,32 +10,38 @@ export type SearchBoxProps = {
 
 const SearchBox:React.FC<SearchBoxProps> = ({ placeholder, onChange, value }) => {
   return (
-    <Flex>
+    <Flex
+      minW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
+      justifyContent='center'
+      alignItems='center'
+    >
       <InputGroup
+        color='orange.300'
+        colorScheme='grey.100'
+        cursor='pointer'
+        borderColor='orange.300'
         borderRadius='12px'
         borderWidth='0.5px'
-        borderColor='orange.300'
         fontFamily='Orbitron'
         fontSize='14px'
         fontWeight='normal'
         letterSpacing='2px'
-        colorScheme='grey.100'
         lineHeight='28px'
-        cursor='pointer'
-        color='orange.300'
+        maxWidth={{ base: '90vw', sm: '470px', md: '470px', lg: '470px' }}
         _hover={{ borderColor: 'blue.500', color: "blue.500" }}
       >
        <Input
-          onChange={onChange}
           focusBorderColor="primary.100"
+          onChange={onChange}
+          placeholder={placeholder}
           type='text'
           value={value.toLowerCase()}
-          placeholder={placeholder}
-          _placeholder={{color: 'gray.300', fontSize: '14px', letterSpacing:'2px'}} />
+          _placeholder={{ color: 'gray.300', fontSize: '14px', letterSpacing: '2px' }}
+        />
         <InputRightElement
-          pointerEvents='none'
-          cursor='pointer'
           children={<IoSearch color='gray.300' fontSize='30px' />}
+          cursor='pointer'
+          pointerEvents='none'
       />
       </InputGroup>
     </Flex>

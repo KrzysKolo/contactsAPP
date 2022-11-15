@@ -10,8 +10,7 @@ import userP from './../../../assets/image/user.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { isAuthenticated, stateEmailAndPasswordPhoto, stateUser, stateUserGoogleOrFacebook, userOfLogged, userOfLoggedEmailAndPasswordPhoto, userOfLoggedWithGoogleOrFacebook } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
-import { getUserData, getUserProfile, isSuccessUser, setLoginEmail } from '../../../features/userProfile/userProfileSlice';
-import { tab } from '@testing-library/user-event/dist/types/convenience';
+import { getUserData, getUserProfile, setLoginEmail } from '../../../features/userProfile/userProfileSlice';
 import { getContact } from '../../../features/firebaseContacts/firebaseContactsSlice';
 
 export type DivMenuProps = {
@@ -22,15 +21,12 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [storage, setStorage] = useStateStorage("klucz", "")
-
   const [userPhoto, setUserPhoto] = useState<string | any>('')
   const [userName, setName] = useState<string>('')
-
   const _userEmail = useSelector(stateUser);
   const _userEmailProfile = useSelector(getUserProfile);
   const _userPhoto = useSelector(stateEmailAndPasswordPhoto);
   const _userGoogleOrFacebook = useSelector(stateUserGoogleOrFacebook);
-  const _isSuccessUser = useSelector(isSuccessUser)
 
   useEffect(() => {
     if (_userEmail.email.length !== 0) {
@@ -80,17 +76,17 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
       key={item.id}>
       <NavLink to={item.path}>
         <Text
+           align='center'
+           color="blue.500"
            fontFamily='Orbitron'
            fontSize='16px'
            fontWeight='normal'
            lineHeight='16px'
            letterSpacing='2px'
-           color="blue.500"
-           align='center'
-           marginTop='10px'
            marginBottom='10px'
-          marginLeft='1rem'
-          _hover={{ color: "green.500" }}
+           marginLeft='1rem'
+           marginTop='10px'
+           _hover={{ color: "green.500" }}
         >
           {item.name}
         </Text>
@@ -102,17 +98,17 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
       {storage}
 
     <HStack
-      width='1200px'
-      justifyContent='space-between'
       boxShadow='sm'
+      justifyContent={{ lg: 'space-between' }}
+      minWidth={{ lg: '990px', xl: '1200px' }}
      >
       <Box
-          width='80px'
-          objectFit='cover'
+        objectFit='cover'
+        width='80px'
       >
         <Image
-          width='100%'
           src={logo}
+          width='100%'
         />
         </Box>
       <Flex>
@@ -120,54 +116,54 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
       </Flex>
       <Box>
         <Flex
-          justifyContent='center'
           alignItems='center'
+          justifyContent='center'
         >
           <Box
-            width='60px'
-            height='60px'
-            borderRadius='50%'
             border='2px'
             borderColor='blue.500'
-            marginRight='2rem'
+            borderRadius='50%'
             boxShadow='base'
-              onClick={handleOpenProfile}
-              objectFit='cover'
+            height='60px'
+            marginRight='2rem'
+            objectFit='cover'
+            onClick={handleOpenProfile}
+            width='60px'
             >
               {userPhoto !==""
                 ? <Image
-                  src={userPhoto}
-                  alt={userName}
-                  borderRadius='50%'
-                  width='100%'
-                  height='100%'
-                  objectFit='cover'
+                    alt={userName}
+                    borderRadius='50%'
+                    height='100%'
+                    objectFit='cover'
+                    src={userPhoto}
+                    width='100%'
                 />
                 : <Image
-                  src={userP}
                   alt={userName}
                   borderRadius='50%'
-                  width='60px'
                   height='100%'
                   objectFit='cover'
+                  src={userP}
+                  width='60px'
                 />
               }
           </Box>
           <Link to='/'>
             <Button
-              padding='10px'
               color='blue.500'
               fontFamily='Orbitron'
               letterSpacing='2px'
               onClick={handleChangeStateLogin}
+              padding='10px'
             >
               Wyloguj się
             </Button>
           </Link>
         </Flex>
       </Box>
-      </HStack>
-      </>
+    </HStack>
+  </>
   )
 }
 

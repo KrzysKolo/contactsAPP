@@ -43,7 +43,7 @@ const LeftPanel = () => {
         <FormAddContact onClose={onClose} />
       </KModal>
       <Flex
-        maxWidth='45%'
+
         flexDirection='column'
         alignItems='center'
        >

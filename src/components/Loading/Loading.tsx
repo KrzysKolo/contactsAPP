@@ -1,5 +1,4 @@
-import React from 'react';
-import { Box, CircularProgress, CircularProgressLabel, Flex } from '@chakra-ui/react'
+import { CircularProgress, Flex } from '@chakra-ui/react'
 
 const Loading = () => {
   return (

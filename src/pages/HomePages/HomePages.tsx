@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { LeftPanel, Loading, RightPanel } from '../../components';
-import { HStack } from '@chakra-ui/react';
+import { Box, Container, Flex, Grid, GridItem, HStack } from '@chakra-ui/react';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../app/store';
@@ -41,19 +41,43 @@ const HomePages = () => {
   return (
     <main>
       <HStack
-        width='1180px'
-        minHeight='80vh'
         alignItems='flex-start'
-        justifyContent='space-evenly'
+        justifyContent='center'
+        minHeight='80vh'
         padding='2rem'
+        width={{ base: '100%', sm: '90%', md: '90%', lg: '1200px' }}
+        marginTop={{ base: '66px', sm: '65px', md: '20px', lg: '20px' }}
       >
+        <Grid
+          templateColumns={{ base: '100%', lg: 'repeat(2, 1fr)' }}
+          alignSelf='self-start'
+          justifySelf='center'
+          gap={{ base: '2' }}
+        >
         {_isLoading
-          ? (<Loading />)
-          : (<>
-              <LeftPanel />
-              <RightPanel />
-          </>)
-         }
+          ? (
+            <GridItem colSpan={2} alignSelf='center'>
+              <Loading />
+            </GridItem>
+              )
+          : (
+              <>
+                <GridItem
+                  margin={{ base: '0 auto' }}
+                  width={{ base: '100%', sm: '90%', md: '60%', lg: '100%' }}
+                >
+                  <LeftPanel />
+                </GridItem>
+                <GridItem
+                  width={{ base: '100%' }}
+                  margin={{ base: '0 auto' }}
+                >
+                  <RightPanel />
+                </GridItem>
+                </>
+            )
+          }
+          </Grid>
       </HStack>
     </main>
   )

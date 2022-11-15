@@ -1,4 +1,4 @@
-import { Flex, HStack, VStack } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, HStack, VStack } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../app/store';
@@ -86,16 +86,19 @@ const ProfilePages = () => {
 
   return (
     <VStack
-      height='70vh'
-      marginTop='5rem'
-    > {_isLoading
-        ? ( <Loading />)
-        : (
-          <Flex width='1200px'>
-            <UserProfile user={user} loginEmail={_isLoginEmail} />)
-          </Flex>)
-      }
+      minHeight='70vh'
+      marginTop={{ base: '3rem', lg: '5rem' }}
+    >
+      <Grid templateColumns={{base: '100%', lg: '1200px'}} gap={{ base: '2' }}>
+        {_isLoading
+          ? ( <Loading />)
+          : (
 
+              <UserProfile user={user} loginEmail={_isLoginEmail} />
+
+            )
+        }
+      </Grid>
     </VStack>
   )
 }

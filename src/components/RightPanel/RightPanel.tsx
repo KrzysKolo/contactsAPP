@@ -17,6 +17,7 @@ const RightPanel = () => {
 
   return (
     <Flex
+      alignItems='center'
       flexDirection='column'
     >
       <SearchBox placeholder='Search...' value={value} onChange={handleChangeValue} />

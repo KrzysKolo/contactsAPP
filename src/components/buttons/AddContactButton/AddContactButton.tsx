@@ -10,18 +10,19 @@ export type AddContactButtonProps = {
 const AddContactButton:React.FC<AddContactButtonProps> = ({ text, onClick }) => {
   return (
     <Button
+      backgroundColor='orange.300'
+      borderRadius='12px'
+      boxShadow='base'
+      color='white'
+      fontFamily='Orbitron'
+      fontSize='16px'
+      justifyContent='space-between'
+      letterSpacing='2px'
       marginTop='2.5rem'
       onClick={onClick}
       padding='24px 53px'
-      fontFamily='Orbitron'
-      fontSize='16px'
-      letterSpacing='2px'
-      justifyContent='space-between'
-      borderRadius='12px'
-      backgroundColor='orange.300'
-      color='white'
-      boxShadow='base'
       transitionDuration='500ms'
+      width={{ base: '90vw', sm: '470px', md: '470px', lg: '400px' }}
       _hover={{ backgroundColor: 'orange.200', color: "blue.500" }}
       _active={{ backgroundColor: 'orange.300'}}
     >

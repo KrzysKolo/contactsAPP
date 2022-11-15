@@ -8,14 +8,18 @@ const FormLogin = () => {
 
   return (
     <Flex
-      flexDirection='column'
       alignItems="center"
+      flexDirection='column'
       justifyContent="center"
     >
       <Box
         width='350px'
       >
-        <Image src={logo} width='100%' marginBottom='20px' />
+        <Image
+          marginBottom='20px'
+          src={logo}
+          width='100%'
+        />
         <TextFormLogin text='ContactsApp to aplikacja, która w jednym miejscu przechowuje Twoje kontakty.' />
         <LoginLinkButton link='/signIn' name="Zaloguj się!" />
         <TextFormLogin text='Jeśli nie masz konta' />

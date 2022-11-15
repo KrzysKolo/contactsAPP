@@ -13,22 +13,21 @@ const LoginLinkButton: React.FC<LoginLinkButtonProps> = ({ link, name}) => {
       <Link to={link}>
         <Button
           bg="orange.300"
-          boxShadow='xs'
           borderColor='blue.500'
-          borderWidth='2px'
           borderRadius='12px'
+          borderWidth='2px'
+          boxShadow='xs'
           color="blue.500"
-          //colorScheme="secondary"
           fontFamily="Orbitron"
-          w="100%"
           fontSize="18px"
-          lineHeight='28px'
           fontWeight="medium"
+          letterSpacing='8%'
+          lineHeight='28px'
+          marginBottom='10px'
+          marginTop='10px'
           paddingTop='24px'
           paddingBottom='24px'
-          letterSpacing='8%'
-          marginTop='10px'
-          marginBottom='10px'
+          w="100%"
           _hover={{ borderColor: 'green.500', color: "green.500" }}
         >
               { name }

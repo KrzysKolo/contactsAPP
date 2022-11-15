@@ -1,11 +1,10 @@
-import { HStack } from '@chakra-ui/react'
-import React from 'react'
-import FormSignIn from '../../components/formComponents/FormSignIn/FormSignIn'
+import { HStack } from '@chakra-ui/react';
+import FormSignIn from '../../components/formComponents/FormSignIn/FormSignIn';
 
 const SignInForm = () => {
   return (
     <main>
-       <HStack
+      <HStack
         height='100vh'
         justifyContent='center'
       >

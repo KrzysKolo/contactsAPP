@@ -1,4 +1,3 @@
-import React from 'react';
 import { DivMenu } from '../menuComponents';
 import dataMenu from '../../assets/data/dataMenu';
 import { Flex } from '@chakra-ui/react';
@@ -6,8 +5,8 @@ import { Flex } from '@chakra-ui/react';
 const Navigation = () => {
   return (
     <Flex
-      flexDirection='row'
       alignItems='center'
+      flexDirection='row'
     >
       <DivMenu menuItems={dataMenu} />
     </Flex>

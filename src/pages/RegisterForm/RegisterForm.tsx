@@ -1,6 +1,5 @@
-import { HStack } from '@chakra-ui/react'
-import React from 'react'
-import FormRegister from '../../components/formComponents/FormRegister/FormRegister'
+import { HStack } from '@chakra-ui/react';
+import FormRegister from '../../components/formComponents/FormRegister/FormRegister';
 
 const RegisterForm = () => {
   return (

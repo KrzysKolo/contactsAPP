@@ -2,13 +2,11 @@ import { useDisclosure } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import contactApi from '../../../api/contactApi';
-import { ContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 import FormEditContact from '../../formComponents/FormEditContact/FormEditContact';
 import KModal from '../../KModal/KModal';
 import ContactBox from '../ContactBox/ContactBox';
 import ContactNameBox from '../ContactNameBox/ContactNameBox';
-import ReactPaginate from 'react-paginate';
 
 export type ContactCardProps = {
   contact: ContactInFirebase | any,
@@ -18,7 +16,6 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
 
   const [isVisibleCard, setIsVisibleCard] = useState<boolean>(false);
   const dispatch = useDispatch();
-
 
   const handleChangeStateVisibleCard = (e: string) => {
     setIsVisibleCard(!isVisibleCard);
@@ -46,13 +43,15 @@ const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
     <>
       <KModal
         isOpen={isOpenEdit}
-        title={"Edytuj kontakt"}
         onOpen={onOpenEdit}
-        onClose={onCloseEdit}>
+        onClose={onCloseEdit}
+        title={"Edytuj kontakt"}
+      >
         <FormEditContact
           contact={contact}
+          handleEditContact={handleEditContact}
           onClose={onCloseEdit}
-          handleEditContact={handleEditContact} />
+        />
       </KModal>
       <section>
         {

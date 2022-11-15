@@ -9,12 +9,14 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
     <Text
       color='red.500'
-      fontSize='14px'
       fontFamily='Orbitron'
+      fontSize='14px'
       letterSpacing='2px'
-      textAlign='center'
       marginTop='15px'
-    >{message}</Text>
+      textAlign='center'
+    >
+      {message}
+    </Text>
   )
 }
 

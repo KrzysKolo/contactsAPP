@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Box, Flex, HStack, Image } from '@chakra-ui/react'
 import { LoginButton } from '../../buttons'
 import { InputSign } from '../../inputs'
@@ -6,8 +6,6 @@ import logo from '../../../assets/image/Contact-AppLogo2.png';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase/config';
 import { useDispatch } from 'react-redux';
 import { isAuthenticated } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import instance from '../../../api/contactAuth';
@@ -60,55 +58,53 @@ const FormRegister = () => {
 
   return (
     <Flex
-    flexDirection='column'
-    alignItems="center"
-    justifyContent="center"
-  >
+      alignItems="center"
+      flexDirection='column'
+      justifyContent="center"
+    >
     <Box
       width='350px'
     >
       <Image src={logo} width='100%' />
       <form action="submit">
           <InputSign
-            name='userName'
-            placeholder='email'
-            value={formik.values.userName}
-            onChange={formik.handleChange}
-            message={formik.errors.userName}
             error={formik.errors.userName}
-            type='text'
+            message={formik.errors.userName}
+            name='userName'
+            onChange={formik.handleChange}
+            placeholder='email'
             touched={formik.touched.userName}
+            type='text'
+            value={formik.values.userName}
           />
           <InputSign
-            placeholder='password'
-            onChange={formik.handleChange}
-            type='password'
-            message={formik.errors.password}
             error={formik.errors.password}
-            value={formik.values.password}
+            message={formik.errors.password}
             name='password'
+            onChange={formik.handleChange}
+            placeholder='password'
             touched={formik.touched.password}
+            type='password'
+            value={formik.values.password}
           />
           <InputSign
-            placeholder='repeat the password'
-            onChange={formik.handleChange}
-            type='password'
-            message={formik.errors.passwordConfirm}
             error={formik.errors.passwordConfirm}
-            value={formik.values.passwordConfirm}
+            message={formik.errors.passwordConfirm}
             name='passwordConfirm'
+            onChange={formik.handleChange}
+            placeholder='repeat the password'
             touched={formik.touched.passwordConfirm}
+            type='password'
+            value={formik.values.passwordConfirm}
              />
           <LoginButton onClick={formik.handleSubmit} name="Zarejestruj się!" />
           <HStack
             justifyContent='space-between'
-
           >
             <TextLink text='' pathInRouting='' />
             <TextLink text='Zaloguj się' pathInRouting='/signin' />
           </HStack>
       </form>
-
     </Box>
   </Flex>
   )

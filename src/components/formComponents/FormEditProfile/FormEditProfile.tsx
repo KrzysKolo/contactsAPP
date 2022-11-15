@@ -1,4 +1,4 @@
-import { Button, Flex, FormControl, FormLabel } from '@chakra-ui/react';
+import { Flex, FormControl, FormLabel } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { UserProfileInFirebase } from '../../../models/InterfaceUserProfile';
 import { useFormik } from "formik";
@@ -33,8 +33,6 @@ const FormEditProfile: React.FC<FormEditProfileProps> = ({ onClose, item, handle
     const types = ['image/png', 'image/jpeg', 'image/jpg'];
     const [url, setUrl] = useState<string | any>(item.photo)
     const [imageName, setImageName] = useState<string | any>('')
-
-  console.log(url);
 
     const onFileChange = (e: any) => {
        const image = e.target.files[0];
@@ -102,25 +100,25 @@ const FormEditProfile: React.FC<FormEditProfileProps> = ({ onClose, item, handle
         <FormControl id="userName">
           <FormLabel>Twój NICK</FormLabel>
           <InputAddContact
-            placeholder='Twoja nazwa'
-            value={formik.values.userName}
-            onChange={formik.handleChange}
             error={formik.errors.userName}
             message={formik.errors.userName}
+            onChange={formik.handleChange}
+            placeholder='Twoja nazwa'
             touched={formik.touched.userName}
+            value={formik.values.userName}
           />
         </FormControl>
         <FormControl id="file">
           <FormLabel>Zdjęcie</FormLabel>
           <input
-            type="file"
             accept="image/png, image/jpeg"
             onChange={onFileChange}
+            type="file"
             />
         </FormControl>
         <Flex
           justifyContent='flex-end'
-           paddingTop='25px'
+          paddingTop='25px'
           paddingBottom='25px'>
            <ButtonInForm title='Zapisz zmiany' onSubmit={updateProfile} variant='submit' />
            <ButtonInForm title='Anuluj' onReset={closeFormEditContact} variant='reset' />

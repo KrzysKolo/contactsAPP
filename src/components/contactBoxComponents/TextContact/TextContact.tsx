@@ -8,14 +8,15 @@ export type TextContactProps = {
 const TextContact: React.FC<TextContactProps> = ({contact}) => {
   return (
     <Text
-      fontSize="1x"
-      marginLeft='1rem'
       color="white"
-      letterSpacing='2px'
       fontFamily="Orbitron"
+      fontSize="1x"
       fontWeight="medium"
-
-    > {contact} </Text>
+      letterSpacing='2px'
+      marginLeft='1rem'
+    >
+      {contact}
+    </Text>
   )
 }
 

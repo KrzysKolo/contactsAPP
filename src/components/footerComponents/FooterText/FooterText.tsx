@@ -8,17 +8,17 @@ export type FooterTextProps = {
 const FooterText: React.FC<FooterTextProps> = ({ text }) => {
   return (
     <Text
-    textAlign='left'
-    fontFamily='Orbitron'
-    fontSize='12px'
-    fontWeight='normal'
-    lineHeight='14px'
-    letterSpacing='2px'
-    color="blue.500"
-    align='center'
-    marginTop='10px'
-    marginBottom='10px'
-    width='100%'
+      align='center'
+      color="blue.500"
+      fontFamily='Orbitron'
+      fontSize='12px'
+      fontWeight='normal'
+      lineHeight='14px'
+      letterSpacing='2px'
+      marginTop='10px'
+      marginBottom='10px'
+      textAlign='left'
+      width='100%'
     >
       {text}
     </Text>

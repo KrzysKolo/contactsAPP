@@ -37,19 +37,21 @@ function App() {
       <ColorModeProvider>
         <Flex direction="column" align="center" justify="center">
           <CSSReset />
-          <Router>
-            { _userLoginState.stateOfLogin.isLoginUser ? <Header /> : <p></p> }
-            <Routes>
-              <Route path="/home" element={ userName || _userLoginState.stateOfLogin.isLoginUser ? <HomePages /> : <Navigate replace to='/' />} />
-              <Route path="/profile" element={ _userLoginState.stateOfLogin.isLoginUser || userName ? <ProfilePages /> : <Navigate to='/' />} />
-              <Route path="/signin" element={<SignInForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/forget-password" element={<FormForgetPassword />} />
-              <Route path="/" element={<LoginFormPages />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            { _userLoginState.stateOfLogin.isLoginUser ? <Footer /> : <p></p> }
-          </Router>
+
+            <Router>
+              { _userLoginState.stateOfLogin.isLoginUser ? <Header /> : <p></p> }
+              <Routes>
+                <Route path="/home" element={ userName || _userLoginState.stateOfLogin.isLoginUser ? <HomePages /> : <Navigate replace to='/' />} />
+                <Route path="/profile" element={ _userLoginState.stateOfLogin.isLoginUser || userName ? <ProfilePages /> : <Navigate to='/' />} />
+                <Route path="/signin" element={<SignInForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+                <Route path="/forget-password" element={<FormForgetPassword />} />
+                <Route path="/" element={<LoginFormPages />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              { _userLoginState.stateOfLogin.isLoginUser ? <Footer /> : <p></p> }
+              </Router>
+
         </Flex>
       </ColorModeProvider>
     </ChakraProvider>

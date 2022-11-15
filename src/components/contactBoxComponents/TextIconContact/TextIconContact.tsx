@@ -11,14 +11,17 @@ const TextIconContact: React.FC<TextIconContactProps> = ({ icon, contact }) => {
 
   return (
     <Text
-      fontSize="14px"
-      marginLeft='0.75rem'
       color="white"
-      letterSpacing='2px'
       fontFamily="Orbitron"
+      fontSize="14px"
       fontWeight="medium"
+      letterSpacing='2px'
+      marginLeft='0.75rem'
       width='100%'
-    ><FontAwesomeIcon fontSize="x-small" icon={icon} /> {contact}</Text>
+    >
+      <FontAwesomeIcon fontSize="x-small" icon={icon} />
+      {contact}
+    </Text>
   )
 }
 

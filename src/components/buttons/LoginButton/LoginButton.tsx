@@ -16,19 +16,18 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onClick, name}) => {
         borderWidth='2px'
         borderRadius='12px'
         color="blue.500"
-        //colorScheme="secondary"
         fontFamily="Orbitron"
-        w="100%"
         fontSize="18px"
-        lineHeight='28px'
         fontWeight="medium"
+        letterSpacing='2px'
+        lineHeight='28px'
+        marginBottom='10px'
+        marginTop='10px'
+        onClick={onClick}
         paddingTop='24px'
         paddingBottom='24px'
-        letterSpacing='2px'
-        marginTop='10px'
-        marginBottom='10px'
+        w="100%"
         _hover={{ borderColor: 'green.500', color: "green.500" }}
-        onClick={onClick}
       >
         { name }
       </Button>

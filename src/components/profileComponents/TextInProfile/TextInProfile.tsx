@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import {Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export type TextInProfileProps = {
@@ -10,28 +10,28 @@ const TextInProfile: React.FC<TextInProfileProps> = ({ title, text }) => {
   return (
     <Flex>
       <Text
+       align='center'
+       color="blue.500"
        fontFamily='Orbitron'
-       fontSize='14px'
+       fontSize={{base: '12px', lg: '14px'}}
        fontWeight='normal'
        lineHeight='16px'
        letterSpacing='2px'
-       color="blue.500"
-       align='center'
-       marginTop='10px'
        marginBottom='10px'
+       marginTop='10px'
       >
         {title}
       </Text>
       <Text
+        align='center'
+        color="blue.500"
         fontFamily='Orbitron'
-        fontSize='16px'
+        fontSize={{base: '14px', lg: '16px'}}
         fontWeight='normal'
         lineHeight='16px'
         letterSpacing='2px'
-        color="blue.500"
-        align='center'
-        marginTop='10px'
         marginBottom='10px'
+        marginTop='10px'
         marginLeft='1rem'
       >
         {text}

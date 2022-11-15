@@ -1,7 +1,6 @@
-import { Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Image, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { isTemplateHead } from 'typescript';
 import contactApi from '../../../api/contactApi';
 import photoUser from '../../../assets/image/user.png';
 import { setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
@@ -38,47 +37,58 @@ const UserDetails: React.FC<UserDetailsProps> = ({ item, loginEmail }) => {
 
   return (
     <>
-         <KModal
-         isOpen={isOpen}
-         title={"Edtruj profil"}
-         onOpen={onOpen}
-         onClose={onClose}
+      <KModal
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        title={"Edtruj profil"}
       >
         <FormEditProfile onClose={onClose} item={item} handleEditProfile={handleEditProfile} />
       </KModal>
-      <Box
-        width='200px'
-        border='3px solid green'
-        borderTopLeftRadius='40px'
-        borderBottomRightRadius='60px'
-        boxShadow='2xl'
-        marginLeft='4rem'
-        marginRight='4rem'
-        display='flex'
-        alignItems='center'
-        justifyContent='center'
-
-      >
-        {item.photo !== ""
-          ? (<Image src={item.photo} alt={item.userName} objectFit='cover' width='99%'  borderTopLeftRadius='40px'
-          borderBottomRightRadius='60px' />)
-          : (<Image src={photoUser} alt={item.userName} />)
-        }
-      </Box>
-      <Box>
-        <TextInProfile title='Twój NICK: ' text={item.userName} />
-        <TextInProfile title='Email: ' text={item.email} />
-        <TextInProfile title='Twoje ID: ' text={item.userID} />
-        <Box
-            marginTop='3rem'
-        >{loginEmail &&
-          <ButtonInForm variant="submit" title="Edytuj profil" onSubmit={onOpen}  />
-          }
-        </Box>
-      </Box>
-      <Box>
-
-      </Box>
+      <Grid templateColumns={{base: '100%', lg: 'repeat(3, 1fr)' }} gap={{ base: '2' }}>
+        <GridItem>
+          <Box
+            alignItems='center'
+            border='3px solid green'
+            borderBottomRightRadius={{ base: '30px', lg: '60px' }}
+            borderTopLeftRadius={{ base: '20px', lg: '40px' }}
+            boxShadow='2xl'
+            display='flex'
+            justifyContent='center'
+            marginLeft='4rem'
+            marginRight='4rem'
+            width={{base: '120px', lg:'200px'}}
+          >
+            {item.photo !== ""
+              ? (<Image
+                alt={item.userName}
+                borderBottomRightRadius={{ base: '30px', lg: '60px' }}
+                borderTopLeftRadius={{ base: '20px', lg: '40px' }}
+                objectFit='cover'
+                src={item.photo}
+                width='99%'
+              />)
+              : (<Image
+                alt={item.userName}
+                src={photoUser}
+              />)
+            }
+            </Box>
+        </GridItem>
+        <GridItem colSpan={2} alignSelf='center'>
+          <Box>
+            <TextInProfile title='Twój NICK: ' text={item.userName} />
+            <TextInProfile title='Email: ' text={item.email} />
+            <TextInProfile title='Twoje ID: ' text={item.userID} />
+            <Box
+              marginTop='3rem'
+            >{loginEmail &&
+              <ButtonInForm variant="submit" title="Edytuj profil" onSubmit={onOpen}  />
+              }
+            </Box>
+          </Box>
+        </GridItem>
+      </Grid>
     </>
   )
 }

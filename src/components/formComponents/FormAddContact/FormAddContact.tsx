@@ -11,15 +11,12 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { addAddressesContact, ContactAddresses, stateContactAddresses } from '../../../features/addAddressesToState/addAddressesToStateSlice';
 import { addSocialMediaUrlContact, SocialMediaUrl, stateContactSocialMedia } from '../../../features/addSocialMediaToState/addSocialmediaToStateSlice';
-
 import { storageImage } from '../../../firebase/config';
 import contactApi from '../../../api/contactApi';
 import { v4 as uuidv4 } from 'uuid';
 import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
 import { addContactToFirebase, isSuccess, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
-
-
 
 export type FormAddContactProps = {
   onClose: () => void,
@@ -85,7 +82,6 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
   };
 
   // ADDRESSES
-
   const initialValuesAddress  = {
     name: name,
     city: city,
@@ -236,23 +232,23 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
         <FormControl id='name'>
           <FormLabel>Imię i Nazwisko</FormLabel>
           <InputAddContact
-            placeholder='imię i nawzwisko'
-            value={formik.values.name}
-            onChange={formik.handleChange}
             error={formik.errors.name}
             message={formik.errors.name}
+            onChange={formik.handleChange}
+            placeholder='imię i nawzwisko'
             touched={formik.touched.name}
+            value={formik.values.name}
           />
         </FormControl>
         <FormControl id='description'>
           <FormLabel>Stanowisko</FormLabel>
           <InputAddContact
-            placeholder='stanowisko'
-            value={formik.values.description}
-            onChange={formik.handleChange}
             error={formik.errors.description}
             message={formik.errors.description}
+            onChange={formik.handleChange}
+            placeholder='stanowisko'
             touched={formik.touched.description}
+            value={formik.values.description}
          />
         </FormControl>
         <Box paddingBottom='20px'>
@@ -295,9 +291,9 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                 marginBottom='20px'
               >
                 <Badge
-                  padding='5px'
-                  marginTop='-45px'
                   border='1px solid #edeaea'
+                  marginTop='-45px'
+                  padding='5px'
                   variant='subtle'
                 >
                   Adres korenspondencyjny
@@ -307,12 +303,12 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                 >
                   <FormLabel>Kraj</FormLabel>
                   <InputAddContact
-                    placeholder='kraj'
-                    value={formik.values.country}
-                    onChange={formik.handleChange}
                     error={formik.errors.country}
                     message={formik.errors.country}
+                    onChange={formik.handleChange}
+                    placeholder='kraj'
                     touched={formik.touched.country}
+                    value={formik.values.country}
                   />
                 </FormControl>
                 <FormControl
@@ -320,24 +316,24 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                 >
                   <FormLabel>Ulica</FormLabel>
                   <InputAddContact
-                    placeholder='ulica'
-                    value={formik.values.street}
-                    onChange={formik.handleChange}
                     error={formik.errors.street}
                     message={formik.errors.street}
+                    onChange={formik.handleChange}
+                    placeholder='ulica'
                     touched={formik.touched.street}
-                  />
+                    value={formik.values.street}
+                    />
                 </FormControl>
                 <HStack>
                   <FormControl id="code">
                     <FormLabel>Kod</FormLabel>
                     <InputAddContact
-                      placeholder='kod'
-                      value={formik.values.code}
-                      onChange={formik.handleChange}
                       error={formik.errors.code}
                       message={formik.errors.code}
+                      onChange={formik.handleChange}
+                      placeholder='kod'
                       touched={formik.touched.code}
+                      value={formik.values.code}
                     />
                   </FormControl>
                   <FormControl
@@ -345,27 +341,25 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                   >
                     <FormLabel>Poczta</FormLabel>
                     <InputAddContact
-                      placeholder='miasto'
-                      value={formik.values.city}
-                      onChange={formik.handleChange}
                       error={formik.errors.city}
                       message={formik.errors.city}
+                      onChange={formik.handleChange}
+                      placeholder='miasto'
                       touched={formik.touched.city}
+                      value={formik.values.city}
                     />
                   </FormControl>
                 </HStack>
-
               </Box>
-
               <Box
                 border='1px solid #edeaea'
                 borderRadius='12px'
                 padding='10px'
               >
                 <Badge
-                  padding='5px'
-                  marginTop='-45px'
                   border='1px solid #edeaea'
+                  marginTop='-45px'
+                  padding='5px'
                   variant='subtle'
                 >
                   Dane teleadresowe
@@ -375,12 +369,12 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                 >
                   <FormLabel>Email</FormLabel>
                   <InputAddContact
-                    placeholder='email'
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
                     error={formik.errors.email}
                     message={formik.errors.email}
+                    onChange={formik.handleChange}
+                    placeholder='email'
                     touched={formik.touched.email}
+                    value={formik.values.email}
                   />
                 </FormControl>
                 <FormControl
@@ -388,20 +382,20 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
                 >
                   <FormLabel>Telefon</FormLabel>
                   <InputAddContact
-                    placeholder='telefon'
-                    value={formik.values.phone}
-                    onChange={formik.handleChange}
                     error={formik.errors.phone}
                     message={formik.errors.phone}
+                    onChange={formik.handleChange}
+                    placeholder='telefon'
                     touched={formik.touched.phone}
+                    value={formik.values.phone}
                   />
                 </FormControl>
               </Box>
               <Flex
                 justifyContent='flex-end'
-                paddingTop='25px'
                 paddingBottom='25px'
-              >
+                paddingTop='25px'
+                >
                 <ButtonInForm title='Dodaj adres' onSubmit={formik.handleSubmit} variant='submit' />
                 <ButtonInForm title='Anuluj' onReset={onResetAddresses} variant='reset' />
               </Flex>
@@ -414,225 +408,220 @@ const FormAddContact = ({ onClose }: FormAddContactProps) => {
             <Box
               border='1px solid #edeaea'
               borderRadius='12px'
-              padding='10px'
               marginTop='20px'
+              padding='10px'
             >
               <Badge
-                padding='5px'
-                marginTop='-45px'
                 border='1px solid #edeaea'
+                marginTop='-45px'
+                padding='5px'
                 variant='subtle'
               >
                 Social Media
               </Badge>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <RiFacebookBoxFill
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
-                  paddingTop='16px'
-                  paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
-                  value={formikSM.values.facebook}
-                  onChange={formikSM.handleChange}
                   name='facebook'
+                  onChange={formikSM.handleChange}
+                  paddingBottom='16px'
+                  paddingTop='16px'
+                  placeholder='https://www....'
+                  type='text'
+                  value={formikSM.values.facebook}
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
                 />
                  { formikSM.errors.facebook && formikSM.touched.facebook &&  <ErrorMessage message={formikSM.errors.facebook} />}
               </InputGroup>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <RiLinkedinBoxFill
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
-                  paddingTop='16px'
-                  paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
-                  value={formikSM.values.linkedin}
-                  onChange={formikSM.handleChange}
                   name='linkedin'
+                  onChange={formikSM.handleChange}
+                  paddingBottom='16px'
+                  paddingTop='16px'
+                  placeholder='https://www....'
+                  type='text'
+                  value={formikSM.values.linkedin}
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
                 />
                  { formikSM.errors.linkedin && formikSM.touched.linkedin &&  <ErrorMessage message={formikSM.errors.linkedin} />}
-
               </InputGroup>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <RiGithubFill
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
+                  name='github'
+                  onChange={formikSM.handleChange}
                   paddingTop='16px'
                   paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
+                  placeholder='https://www....'
                   value={formikSM.values.github}
-                  onChange={formikSM.handleChange}
-                  name='github'
+                  type='text'
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
                 />
                  { formikSM.errors.github && formikSM.touched.github &&  <ErrorMessage message={formikSM.errors.github} />}
-
               </InputGroup>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <RiYoutubeFill
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
-                  paddingTop='16px'
-                  paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
-                  value={formikSM.values.youtube}
-                  onChange={formikSM.handleChange}
                   name='youtube'
-                />
+                  onChange={formikSM.handleChange}
+                  paddingBottom='16px'
+                  paddingTop='16px'
+                  placeholder='https://www....'
+                  type='text'
+                  value={formikSM.values.youtube}
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
+                  />
                  { formikSM.errors.youtube && formikSM.touched.youtube &&  <ErrorMessage message={formikSM.errors.youtube} />}
-
               </InputGroup>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <RiInstagramLine
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
-                  paddingTop='16px'
-                  paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
-                  value={formikSM.values.instagram}
-                  onChange={formikSM.handleChange}
                   name='instagram'
+                  onChange={formikSM.handleChange}
+                  paddingBottom='16px'
+                  paddingTop='16px'
+                  placeholder='https://www....'
+                  type='text'
+                  value={formikSM.values.instagram}
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
                 />
                  { formikSM.errors.instagram && formikSM.touched.instagram &&  <ErrorMessage message={formikSM.errors.instagram} />}
-
               </InputGroup>
               <InputGroup flexDirection='column'>
                 <InputLeftElement
-                  pointerEvents='none'
                   marginTop='5px'
+                  pointerEvents='none'
                   children={
                     <TbWorld
                       color='gray.300' />
                   }
                 />
                 <Input
-                  type='text'
-                  placeholder='https://www....'
+                  background='white.100'
+                  borderBottomColor='orange.300'
+                  borderBottomWidth='2px'
+                  borderRadius='12px'
+                  colorScheme='#d2d1d13e'
+                  cursor='pointer'
                   fontFamily='Orbitron'
                   fontSize='12px'
                   fontWeight='normal'
                   letterSpacing='2px'
-                  colorScheme='#d2d1d13e'
                   lineHeight='16px'
-                  background='white.100'
                   marginTop='5px'
                   marginBottom='5px'
-                  borderRadius='12px'
-                  borderBottomWidth='2px'
-                  borderBottomColor='orange.300'
-                  paddingTop='16px'
-                  paddingBottom='16px'
-                  cursor='pointer'
-                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
-                  value={formikSM.values.web}
-                  onChange={formikSM.handleChange}
                   name='web'
+                  onChange={formikSM.handleChange}
+                  paddingBottom='16px'
+                  paddingTop='16px'
+                  placeholder='https://www....'
+                  type='text'
+                  value={formikSM.values.web}
+                  _hover={{ borderColor: 'blue.500', color: "blue.500" }}
                 />
                  { formikSM.errors.web && formikSM.touched.web &&  <ErrorMessage message={formikSM.errors.web} />}
-
               </InputGroup>
               <Flex
                 justifyContent='flex-end'

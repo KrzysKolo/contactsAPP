@@ -8,10 +8,6 @@ import { searchValue } from '../../features/getSearchValue/getSearchValueSlice';
 import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 import { ContactCard } from '../contactBoxComponents/';
-import FormEditContact from '../formComponents/FormEditContact/FormEditContact';
-import KModal from '../KModal/KModal';
-import { BiSkipNextCircle } from 'react-icons/bi'
-
 
 const ListContacts: React.FC = () => {
 
@@ -21,10 +17,8 @@ const ListContacts: React.FC = () => {
     onClose: onCloseEdit,
   } = useDisclosure();
 
-  const dispatch = useDispatch<AppDispatch>();
   const _user = useSelector(stateUser);
   const _contactsTab = useSelector(getAllContacts);
-  const _isLoading = useSelector(isLoading);
 
   const [contactsTabUser, setContactsTabUser] = useState<ContactInFirebase[] | any>([])
   const [contactsToList, setContactsToList] = useState<ContactInFirebase[] | any>([]);
@@ -67,32 +61,35 @@ const ListContacts: React.FC = () => {
       setPageNumber(selected);
     };
 
-
   return (
     <>
       <Flex
         flexDirection='column'
+        maxW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
       >
-      <Box
-        paddingTop='2rem'
-      >
-        {displayContacts}
+        <Box
+          display='flex'
+          flexDirection='column'
+          paddingTop='2rem'
+          justifyContent='center'
+          alignItems='center'
+        >
+          {displayContacts}
         </Box>
         <Flex>
-      <ReactPaginate
-        previousLabel={"<<"}
-        nextLabel={">>"}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={"paginationBttns"}
-        previousLinkClassName={"previousBttn"}
-        nextLinkClassName={"nextBttn"}
-        disabledClassName={"paginationDisabled"}
-        activeClassName={"paginationActive"}
-
-          />
-          </Flex>
+          <ReactPaginate
+            activeClassName={"paginationActive"}
+            containerClassName={"paginationBttns"}
+            disabledClassName={"paginationDisabled"}
+            nextLabel={">>"}
+            nextLinkClassName={"nextBttn"}
+            onPageChange={changePage}
+            pageCount={pageCount}
+            previousLabel={"<<"}
+            previousLinkClassName={"previousBttn"}
+           />
         </Flex>
+      </Flex>
     </>
   )
 }
