@@ -1,6 +1,6 @@
 # ContactsAPP
 <img src="demo/prezentacja.jpg" alt="StarWares" width="550px">
-To test the applications <a target="_blank" href="contactsapp-e7ad7.firebaseapp.com">Click here </a>
+To test the applications <a target="_blank" href="https://contactsapp-e7ad7.firebaseapp.com/">Click here </a>
 
 # Built With
  - React
