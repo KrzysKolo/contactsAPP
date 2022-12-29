@@ -1,4 +1,4 @@
-import { Box, HStack, Stack, Text, VStack, Image, Flex, Link, useDisclosure } from '@chakra-ui/react';
+import { Box, HStack, Stack, Text, Image, Flex, Link } from '@chakra-ui/react';
 import React from 'react';
 import { IoChevronUpSharp } from "react-icons/io5";
 import photoUsers from '../../../assets/image/users.png';
@@ -37,9 +37,9 @@ const ContactBox:React.FC<ContactBoxProps> = ({ contact, onClick, onOpen }) => {
 
   return (
     <Flex
-      maxW={{ base: '90vw', sm: '470px', md: '470px', lg: '470px' }}
-      justifyContent='center'
       alignItems='center'
+      justifyContent='center'
+      maxW={{ base: '90vw', sm: '470px', md: '470px', lg: '470px' }}
     >
       <Stack
         background={contact.typeContact === "1" ? "blue.500" : "green.500"}

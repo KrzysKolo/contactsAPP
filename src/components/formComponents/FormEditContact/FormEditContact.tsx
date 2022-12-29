@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, VStack } from '@chakra-ui/react';
+import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 import { TbWorld } from 'react-icons/tb';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
@@ -85,7 +85,6 @@ const FormEditContact: React.FC<FormEditContactProps> = ({ handleEditContact, on
  };
 
   // ADDRESSES
-
   const initialValuesAddress  = {
     name: name,
     city: city,

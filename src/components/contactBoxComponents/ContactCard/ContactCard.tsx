@@ -1,6 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import contactApi from '../../../api/contactApi';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 import FormEditContact from '../../formComponents/FormEditContact/FormEditContact';
@@ -15,7 +14,6 @@ export type ContactCardProps = {
 const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
 
   const [isVisibleCard, setIsVisibleCard] = useState<boolean>(false);
-  const dispatch = useDispatch();
 
   const handleChangeStateVisibleCard = (e: string) => {
     setIsVisibleCard(!isVisibleCard);

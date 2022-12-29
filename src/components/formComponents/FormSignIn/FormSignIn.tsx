@@ -12,16 +12,12 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { auth, FacebookProvider, GoogleProvider } from '../../../firebase/config';
 import { signInWithPopup } from 'firebase/auth';
-import axios from '../../../api/contactAuth';
 import useStateStorage from '../../../hooks/useStateStorage/useStateStorage';
 import instance from '../../../api/contactAuth';
-import { resourceLimits } from 'worker_threads';
-import ForgetPassword from '../../ForgetPassword/ForgetPassword';
 import TextLink from '../TextLink/TextLink';
 import { userProfile } from '../../../services/userProfil/userProfil';
-import { getUserData, getUserProfile, isSuccessUser, setLoadingUser, setLoginEmail, setSuccessUser } from '../../../features/userProfile/userProfileSlice';
+import { getUserData, setLoadingUser, setLoginEmail, setSuccessUser } from '../../../features/userProfile/userProfileSlice';
 import { UserProfileInFirebase } from '../../../models/InterfaceUserProfile';
-import { isSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 
 
 const FormSignIn = () => {
@@ -30,8 +26,6 @@ const FormSignIn = () => {
   const [userNameInStorage, setUserNameInStorage] = useStateStorage("", "")
 
   const _userID = useSelector(stateUser);
-  const _isSuccessUser = useSelector(isSuccessUser)
-  const _isSuccess = useSelector(isSuccess);
 
   let usersTab: UserProfileInFirebase[] = [];
 
@@ -143,8 +137,8 @@ const FormSignIn = () => {
 
   return (
     <Flex
-      flexDirection='column'
       alignItems="center"
+      flexDirection='column'
       justifyContent="center"
     >
       <Box
@@ -153,24 +147,24 @@ const FormSignIn = () => {
         <Image src={logo} width='100%' />
         <form action="submit">
           <InputSign
-            name='userName'
-            placeholder='email'
-            onChange={formik.handleChange}
-            value={formik.values.userName}
-            type='text'
-            message={formik.errors.userName}
             error={formik.errors.userName}
+            message={formik.errors.userName}
+            name='userName'
+            onChange={formik.handleChange}
+            placeholder='email'
             touched={formik.touched.userName}
+            type='text'
+            value={formik.values.userName}
           />
           <InputSign
-            name='password'
-            placeholder='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            type='password'
-            message={formik.errors.password}
             error={formik.errors.password}
+            message={formik.errors.password}
+            name='password'
+            onChange={formik.handleChange}
+            placeholder='password'
             touched={formik.touched.password}
+            type='password'
+            value={formik.values.password}
           />
           <LoginButton onClick={formik.handleSubmit} name="Zaloguj się emailem" />
           <HStack
@@ -182,10 +176,10 @@ const FormSignIn = () => {
           </HStack>
         </form>
         <Flex
-          justifyContent='space-between'
           alignItems='center'
-          paddingTop='20px'
+          justifyContent='space-between'
           paddingBottom='20px'
+          paddingTop='20px'
         >
           <Line />
           <Text

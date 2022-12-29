@@ -1,9 +1,8 @@
 import { Box, Flex, useDisclosure,  } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../app/store';
-import { getAllContacts, isLoading } from '../../features/firebaseContacts/firebaseContactsSlice';
+import { useSelector } from 'react-redux';
+import { getAllContacts } from '../../features/firebaseContacts/firebaseContactsSlice';
 import { searchValue } from '../../features/getSearchValue/getSearchValueSlice';
 import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
@@ -68,11 +67,11 @@ const ListContacts: React.FC = () => {
         maxW={{ base: '90vw', sm: '90vw', md: '470px', lg: '470px' }}
       >
         <Box
+          alignItems='center'
           display='flex'
           flexDirection='column'
-          paddingTop='2rem'
           justifyContent='center'
-          alignItems='center'
+          paddingTop='2rem'
         >
           {displayContacts}
         </Box>

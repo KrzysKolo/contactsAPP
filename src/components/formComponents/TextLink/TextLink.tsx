@@ -11,14 +11,14 @@ const TextLink: React.FC<TextLinkProps> = ({ text, pathInRouting }) => {
   return (
     <Link to={pathInRouting}>
     <Text
+      color="blue.500"
       cursor='pointer'
-      textDecoration='underline'
       fontFamily='Orbitron'
       fontSize='12px'
       fontWeight='normal'
-      lineHeight='14px'
       letterSpacing='2px'
-      color="blue.500"
+      lineHeight='14px'
+      textDecoration='underline'
       _hover={{ color: "orange.300" }}
     >
       {text}

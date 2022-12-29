@@ -1,11 +1,20 @@
-import React from 'react';
+import { Flex, Image } from '@chakra-ui/react';
+import error from './../../assets/image/404-error-page-not-found.jpg';
+
 
 const NotFound = () => {
   return (
-    <div>
-      <h2>404</h2>
-      <p>Nie znaleziono takiej strony</p>
-    </div>
+    <Flex
+      alignItems='center'
+      justifyContent='center'
+    >
+      <Image
+         alt='Error 404'
+         objectFit='cover'
+         src={error}
+         width='60%'
+       />
+    </Flex>
   )
 }
 

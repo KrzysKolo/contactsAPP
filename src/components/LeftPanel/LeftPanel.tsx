@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Flex, Image, useDisclosure } from '@chakra-ui/react';
 import logo from './../../assets/image/kontakt.jpg';
 import { AddContactButton } from '../buttons';
@@ -52,10 +51,10 @@ const LeftPanel = () => {
           justifyContent='center'
         >
           <Image
-            src={logo}
             alt='Logo'
-            width='70%'
             objectFit='cover'
+            src={logo}
+            width='70%'
           />
         </Flex>
         <Box>

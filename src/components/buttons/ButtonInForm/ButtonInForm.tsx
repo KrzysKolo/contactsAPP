@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/react';
-import React, { MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 export type ButtonInFormProps = {
   title: string

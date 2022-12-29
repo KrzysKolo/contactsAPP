@@ -1,18 +1,15 @@
 import { useEffect } from 'react';
 import { LeftPanel, Loading, RightPanel } from '../../components';
-import { Box, Container, Flex, Grid, GridItem, HStack } from '@chakra-ui/react';
+import { Grid, GridItem, HStack } from '@chakra-ui/react';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../app/store';
-import { getAllContacts, getContact, isLoading, isSuccess, setLoading, setSuccess } from '../../features/firebaseContacts/firebaseContactsSlice';
+import { getContact, isLoading, isSuccess, setLoading, setSuccess } from '../../features/firebaseContacts/firebaseContactsSlice';
 import { getContacts } from '../../services/contacts/contacts';
-import { stateUser } from '../../features/stateOfLogin/stateOfLoginSlice';
 import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 
 const HomePages = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const _allContacts = useSelector(getAllContacts);
-  const _user = useSelector(stateUser);
   const _isSuccess = useSelector(isSuccess);
   const _isLoading = useSelector(isLoading);
 
@@ -48,10 +45,10 @@ const HomePages = () => {
         width={{ base: '100%', sm: '90%', md: '90%', lg: '1200px' }}
        >
         <Grid
-          templateColumns={{ base: '100%', lg: 'repeat(2, 1fr)' }}
           alignSelf='self-start'
-          justifySelf='center'
           gap={{ base: '0.25rem', md: '2rem'}}
+          justifySelf='center'
+          templateColumns={{ base: '100%', lg: 'repeat(2, 1fr)' }}
         >
         {_isLoading
           ? (

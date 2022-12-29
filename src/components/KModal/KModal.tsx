@@ -4,7 +4,6 @@ import { ModalCloseButton } from "@chakra-ui/modal";
 import { ModalContent } from "@chakra-ui/modal";
 import { ModalOverlay } from "@chakra-ui/modal";
 import { Modal } from "@chakra-ui/modal";
-import React from "react";
 import { JsxElement } from "typescript";
 import { ContactInFirebase } from "../../models/InterfaceContactsInFirebase";
 interface KModalProps {

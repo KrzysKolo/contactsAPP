@@ -1,14 +1,12 @@
-import { Flex, Grid, GridItem, HStack, VStack } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Grid, VStack } from '@chakra-ui/react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../app/store';
 import { Loading } from '../../components';
 import UserProfile from '../../components/UserProfile/UserProfile';
-import { isLoading } from '../../features/firebaseContacts/firebaseContactsSlice';
 import { stateUser, stateUserGoogleOrFacebook, userOfLoggedEmailAndPasswordPhoto } from '../../features/stateOfLogin/stateOfLoginSlice';
-import { getUserData, getUserProfile, isLoadingUser, isLoginEmail, isSuccessUser, setLoadingUser, setLoginEmail, setSuccessUser } from '../../features/userProfile/userProfileSlice';
+import { getUserData, getUserProfile, isLoadingUser, isLoginEmail, isSuccessUser, setLoadingUser, setSuccessUser } from '../../features/userProfile/userProfileSlice';
 import useWebsiteTitle from '../../hooks/useWebsiteTitle/useWebsiteTitle';
-import { ContactInFirebase } from '../../models/InterfaceContactsInFirebase';
 import { UserProfileInFirebase } from '../../models/InterfaceUserProfile';
 import { userProfile } from '../../services/userProfil/userProfil';
 
@@ -21,28 +19,22 @@ const ProfilePages = () => {
   const _userProfil = useSelector(getUserProfile);
   const _userProfilGoogleOrFacebook = useSelector(stateUserGoogleOrFacebook);
   const _isLoginEmail = useSelector(isLoginEmail);
-   const Tab: { userID: string; userName: string; email: string; photo: string; }[] = []
+  const Tab: { userID: string; userName: string; email: string; photo: string; }[] = []
     Tab.push(_userProfilGoogleOrFacebook)
   const [user, setUser] = useState<UserProfileInFirebase[] | any>([]);
-
-
   const _userID = useSelector(stateUser);
   const _isSuccessUser = useSelector(isSuccessUser)
-
 
   let usersTab: UserProfileInFirebase[] = [];
 
   const fetchUserProfile = async () => {
-
     try {
       const res = await userProfile();
-      console.log(res)
        for (const key in res.data) {
          usersTab.push({ ...res.data[key], id: key });
       };
       let userTab: UserProfileInFirebase | any = [];
       userTab.push(usersTab.filter((item: { userID: string; }) => item.userID === _userID.userID));
-      console.log(userTab[0].length)
       if (userTab[0].length > 1) {
         dispatch(getUserData(userTab[0].splice(0, 1)));
       }

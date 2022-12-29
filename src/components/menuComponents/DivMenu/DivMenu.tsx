@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-//CHAKRA COMPONENTS
 import { Box, Flex, HStack, Image, Button, Text } from '@chakra-ui/react';
-//REACT-ROUTER-DOM
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-//FILES
 import { dataMenuType } from '../../../assets/data/dataMenu';
 import logo from './../../../assets/image/Contact-AppLogo2.png';
 import userP from './../../../assets/image/user.png';
@@ -74,7 +71,7 @@ const DivMenu: React.FC<DivMenuProps> = ({ menuItems }) => {
       margin='0 20px'
       padding='5px'
       key={item.id}>
-      <NavLink to={item.path}>
+      <NavLink to={item.path} >
         <Text
            align='center'
            color="blue.500"

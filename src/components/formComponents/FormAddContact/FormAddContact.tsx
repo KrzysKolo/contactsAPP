@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack, useToast, VStack } from '@chakra-ui/react';
+import { Badge, Box, Flex, FormControl, FormLabel, HStack, Input, InputGroup, InputLeftElement, Radio, RadioGroup, Stack } from '@chakra-ui/react';
 import InputAddContact from '../../inputs/InputAddContact/InputAddContact';
 import { RiFacebookBoxFill, RiLinkedinBoxFill, RiGithubFill, RiYoutubeFill, RiInstagramLine } from 'react-icons/ri'
 import { TbWorld } from 'react-icons/tb'
@@ -15,7 +15,7 @@ import { storageImage } from '../../../firebase/config';
 import contactApi from '../../../api/contactApi';
 import { v4 as uuidv4 } from 'uuid';
 import { stateUser } from '../../../features/stateOfLogin/stateOfLoginSlice';
-import { addContactToFirebase, isSuccess, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
+import { addContactToFirebase, setLoading, setSuccess } from '../../../features/firebaseContacts/firebaseContactsSlice';
 import { ContactInFirebase } from '../../../models/InterfaceContactsInFirebase';
 
 export type FormAddContactProps = {

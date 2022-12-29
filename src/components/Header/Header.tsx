@@ -1,4 +1,3 @@
-import React from 'react';
 import { DivMenu } from '../menuComponents';
 import DivMenuMobile from '../menuComponents/DivMenuMobile/DivMenuMobile'
 import dataMenu from '../../assets/data/dataMenu';

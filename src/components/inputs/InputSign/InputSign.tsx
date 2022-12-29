@@ -19,27 +19,26 @@ const InputSign: React.FC<InputSignProps> = ({ placeholder, value, type, onChang
       flexDirection='column'
     >
       <Input
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        value={value}
+        background='white.100'
+        borderBottomColor='blue.500'
+        borderBottomWidth='2px'
+        borderRadius='12px'
+        cursor='pointer'
         fontFamily='Orbitron'
         fontSize='14px'
         fontWeight='normal'
-        letterSpacing='2px'
-        //colorScheme='#d2d1d13e'
         lineHeight='28px'
-        background='white.100'
-        marginTop='15px'
+        letterSpacing='2px'
         marginBottom='10px'
-        borderRadius='12px'
-        borderBottomWidth='2px'
-        borderBottomColor='blue.500'
-        paddingTop='24px'
-        paddingBottom='24px'
-        cursor='pointer'
-        _hover={{ borderBottomColor: 'green.500', color: "green.500" }}
+        marginTop='15px'
+        name={name}
         onChange={onChange}
+        paddingBottom='24px'
+        paddingTop='24px'
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        _hover={{ borderBottomColor: 'green.500', color: "green.500" }}
       />
       {error && touched && <ErrorMessage message={message} />}
     </Flex>

@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Image, Button, InputGroup, InputLeftElement, Input, Icon } from '@chakra-ui/react';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { dataMenuType } from '../../../assets/data/dataMenu';
