@@ -1,5 +1,5 @@
 # ContactsAPP
-<p>ContactsAPP is an application that I wrote to improve my work. I often use Social Media or my clients' addresses, hence the idea to keep these data in one application.</p>
+<p>ContactsAPP is an application I wrote to improve my work. I often use Social Media and my clients' addresses, hence the idea to store this data in one application.</p>
 <br><br>
 <img src="demo/prezentacja.jpg" alt="StarWares" width="550px">
 To test the applications <a target="_blank" href="https://contactsapp-e7ad7.firebaseapp.com/">Click here </a>
