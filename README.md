@@ -4,11 +4,11 @@
 <img src="demo/prezentacja.jpg" alt="StarWares" width="550px">
 To test the applications <a target="_blank" href="https://contactsapp-e7ad7.firebaseapp.com/">Click here </a>
 <p>
-You can log in to the application with:
+You can log in to the application with your:
  <ol>
-  <li>your e-mail address,</li>
-  <li>Facebook accounts, </li>
-  <li>Google accounts, </li>
+  <li> e-mail address,</li>
+  <li> Facebook account, </li>
+  <li>Google account, </li>
   <li>test email: <br>
     login: <b>test@test.pl</b><br>
    password: <b>test1234</b>
